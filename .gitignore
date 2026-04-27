@@ -1,0 +1,67 @@
+# IDE & Editor
+.vscode/
+.idea/
+.sublime-project
+.sublime-workspace
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+*.tmp
+
+# Node.js
+node_modules/
+npm-debug.log
+yarn-error.log
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Build outputs
+dist/
+build/
+*.bundle.js
+
+# Logs
+logs/
+*.log
+
+# OS
+.DS_Store
+.AppleDouble
+.LSOverride
+*.swp
+*.swo
+Thumbs.db
+
+# IDE specific
+.vscode/settings.json
+.idea/
+.gradle/
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Temporary files
+*.bak
+*.tmp
+*.swp
+
+# Test coverage
+coverage/
+.nyc_output/
+
+# Git
+.git/
+.github/
+
+# Misc
+.cache/
+dist/
+build/
+.parcel-cache
+.next
+out/
