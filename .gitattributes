@@ -1,0 +1,19 @@
+# Auto detect text files
+* text=auto
+
+# HTML files
+*.html text eol=lf
+
+# CSS files
+*.css text eol=lf
+
+# JavaScript files
+*.js text eol=lf
+
+# Markdown files
+*.md text eol=lf
+
+# Images
+*.png binary
+*.jpg binary
+*.gif binary
