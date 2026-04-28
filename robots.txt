@@ -1,0 +1,6 @@
+# Allow all crawlers
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://xenon231tech.github.io/xenon-airdop-task-tracker/sitemap.xml
