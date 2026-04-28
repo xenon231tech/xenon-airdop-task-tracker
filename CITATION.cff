@@ -1,0 +1,20 @@
+cff-version: 1.2.0
+message: "If you use Xenon Airdrop Task Tracker in your research, please cite it as below."
+title: "Xenon Airdrop Ultimate Task Tracker"
+authors:
+  - family-names: "Khsan"
+    given-names: "Mohamad"
+    alias: "xenon231tech"
+    email: "xannrlcs@gmail.com"
+    affiliation: "Independent Developer"
+date-released: 2026-04-28
+url: "https://github.com/xenon231tech/xenon-airdrop-task-tracker"
+repository-code: "https://github.com/xenon231tech/xenon-airdrop-task-tracker"
+abstract: "A web-based airdrop task tracker with categories, priorities, dark mode, charts, calendar, and export/import features."
+keywords:
+  - "airdrop"
+  - "crypto"
+  - "task-tracker"
+  - "web3"
+  - "defi"
+license: "MIT"
