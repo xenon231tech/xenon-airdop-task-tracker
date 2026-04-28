@@ -1,0 +1,18 @@
+# CODEOWNERS - Siapa yang review Pull Request
+
+# Default owner untuk semua file
+* @xenon231tech
+
+# File website utama
+/index.html @xenon231tech
+
+# Dokumentasi
+/README.md @xenon231tech
+/FAQ.md @xenon231tech
+/CONTRIBUTING.md @xenon231tech
+/SECURITY.md @xenon231tech
+/CODE_OF_CONDUCT.md @xenon231tech
+
+# Konfigurasi
+/.github/ @xenon231tech
+/.vscode/ @xenon231tech
