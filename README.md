@@ -1,9 +1,10 @@
+
 # ⚡ Xenon Airdrop Ultimate Task Tracker
 
-![GitHub stars](https://img.shields.io/github/stars/xenon231tech/xenon-airdop-task-tracker?style=for-the-badge&color=gold)
-![GitHub forks](https://img.shields.io/github/forks/xenon231tech/xenon-airdop-task-tracker?style=for-the-badge&color=blue)
-![GitHub license](https://img.shields.io/github/license/xenon231tech/xenon-airdop-task-tracker?style=for-the-badge)
-![Website](https://img.shields.io/website?url=https%3A%2F%2Fxenon231tech.github.io%2Fxenon-airdop-task-tracker%2F&style=for-the-badge&label=Website&color=green)
+![GitHub stars](https://img.shields.io/github/stars/xenon231tech/xenon-airdrop-task-tracker?style=for-the-badge&color=gold)
+![GitHub forks](https://img.shields.io/github/forks/xenon231tech/xenon-airdrop-task-tracker?style=for-the-badge&color=blue)
+![GitHub license](https://img.shields.io/github/license/xenon231tech/xenon-airdrop-task-tracker?style=for-the-badge)
+![Website](https://img.shields.io/website?url=https%3A%2F%2Fxenon231tech.github.io%2Fxenon-airdrop-task-tracker%2F&style=for-the-badge&label=Website&color=green)
 
 > **Track • Manage • Conquer** — Never miss an airdrop task again!
 
@@ -13,13 +14,13 @@
 
 **Klik link di bawah untuk mencoba langsung:**
 
-[![Live Demo](https://img.shields.io/badge/🚀_LIVE_DEMO-FFD700?style=for-the-badge&logo=googlechrome&logoColor=black)](https://xenon231tech.github.io/xenon-airdop-task-tracker/)
+[![Live Demo](https://img.shields.io/badge/🚀_LIVE_DEMO-FFD700?style=for-the-badge&logo=googlechrome&logoColor=black)](https://xenon231tech.github.io/xenon-airdrop-task-tracker/)
 
 ---
 
 ## 📸 Preview
 
-![Xenon Airdrop Tracker](Screenshot%20(52).png)
+![Xenon Airdrop Tracker](Screenshot%20(79).png)
 
 ---
 
@@ -52,6 +53,16 @@
 ## 📥 Cara Menjalankan di Lokal
 
 ```bash
-git clone https://github.com/xenon231tech/xenon-airdop-task-tracker.git
-cd xenon-airdop-task-tracker
-# Buka file index.html dengan browser
+git clone https://github.com/xenon231tech/xenon-airdrop-task-tracker.git
+cd xenon-airdrop-task-tracker
+# Buka file index.html dengan browserxenon-airdrop-task-tracker/
+├── index.html          # File utama website
+├── README.md           # Dokumentasi ini
+├── LICENSE             # MIT License
+├── SECURITY.md         # Kebijakan keamanan
+├── CODE_OF_CONDUCT.md  # Kode etik
+├── CONTRIBUTING.md     # Panduan kontribusi
+├── CHANGELOG.md        # Catatan perubahan
+├── Screenshot (79).png # Preview gambar
+└── .github/
+    └── FUNDING.yml     # Link donasi
