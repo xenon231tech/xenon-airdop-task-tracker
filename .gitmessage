@@ -1,0 +1,44 @@
+# 📝 Panduan Commit Message
+# ============================================
+# Jenis commit yang bisa dipakai:
+#
+# feat     : Fitur baru
+# fix      : Perbaikan bug
+# docs     : Dokumentasi (README, FAQ, dll)
+# style    : Formatting (tidak mengubah kode)
+# refactor : Restrukturisasi kode (tanpa perubahan fungsi)
+# test     : Menambah atau memperbaiki test
+# chore    : Maintenance (build, config, dependencies)
+# perf     : Perbaikan performa
+#
+# ============================================
+# Contoh commit message yang baik:
+#
+# feat: add new category for airdrop tasks
+# fix: resolve dark mode toggle not working
+# docs: update README with donation links
+# chore: update .gitignore
+#
+
+# Judul (max 50 karakter)
+# <jenis>: <deskripsi singkat>
+#
+# Contoh:
+# feat: add project website link column
+#
+
+# Deskripsi panjang (opsional) - jelaskan lebih detail
+# - Apa yang diubah
+# - Kenapa diubah
+# - Dampak perubahan
+#
+# Contoh:
+# Menambahkan kolom baru di tabel untuk menyimpan link website
+# proyek airdrop. User bisa nambahin URL pas create task,
+# dan di tabel muncul tombol Visit buat buka link.
+#
+
+# Issue terkait (jika ada)
+# Issue: #123
+#
+# ============================================
