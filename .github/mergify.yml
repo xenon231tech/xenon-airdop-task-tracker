@@ -1,0 +1,29 @@
+# Auto-merge pull request yang memenuhi syarat
+
+pull_request_rules:
+  - name: Auto-approve and merge dependabot PRs
+    conditions:
+      - author~=^dependabot(|-preview)\[bot\]$
+      - check-success=build
+    actions:
+      approve:
+        method: merge
+      merge:
+        method: squash
+        strict: true
+
+  - name: Auto-merge minor updates
+    conditions:
+      - label=dependencies
+      - check-success=build
+    actions:
+      merge:
+        method: squash
+        strict: true
+
+  - name: Warn author on conflict
+    conditions:
+      - conflict
+    actions:
+      comment:
+        message: "⚠️ PR ini memiliki konflik. Tolong resolve dulu ya!"
