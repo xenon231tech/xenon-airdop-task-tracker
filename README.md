@@ -16,7 +16,8 @@
 
 ## 📸 Live Preview
 
-![Xenon Airdrop Tracker](https://raw.githubusercontent.com/xenon231tech/xenon-airdrop-task-tracker/main/Screenshot%20(79).png)
+> **Preview website bisa dilihat langsung di:**  
+> 🔗 https://xenon231tech.github.io/xenon-airdop-task-tracker/
 
 ---
 
