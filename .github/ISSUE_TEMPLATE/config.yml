@@ -1,0 +1,14 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 📖 Dokumentasi
+    url: https://github.com/xenon231tech/xenon-airdrop-task-tracker/blob/main/README.md
+    about: Baca dokumentasi dulu sebelum buat issue
+  - name: ❓ FAQ
+    url: https://github.com/xenon231tech/xenon-airdrop-task-tracker/blob/main/FAQ.md
+    about: Cek FAQ untuk pertanyaan umum
+  - name: 💬 Discord / Telegram
+    url: https://t.me/xenon231tech
+    about: Chat via Telegram untuk diskusi cepat
+  - name: 📧 Email
+    url: mailto:xannrlcs@gmail.com
+    about: Email untuk hal sensitif/keamanan
