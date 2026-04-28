@@ -21,3 +21,21 @@ const userName = 'Xenon';
 
 // ❌ Tidak bagus
 var user_name = 'Xenon';
+
+---
+
+### 3️⃣ `CODEOWNERS` (di folder `.github/`)
+```markdown
+# CODEOWNERS - Siapa yang review PR
+
+* @xenon231tech
+
+# File penting
+/index.html @xenon231tech
+/README.md @xenon231tech
+/SECURITY.md @xenon231tech
+/CODE_OF_CONDUCT.md @xenon231tech
+
+# Folder
+/.github/ @xenon231tech
+/.vscode/ @xenon231tech
