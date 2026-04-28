@@ -1,0 +1,26 @@
+# Auto label untuk Pull Request
+
+documentation:
+  - changed-files:
+      - any-glob-to-any-file: '**/*.md'
+
+html:
+  - changed-files:
+      - any-glob-to-any-file: '**/*.html'
+
+css:
+  - changed-files:
+      - any-glob-to-any-file: '**/*.css'
+
+javascript:
+  - changed-files:
+      - any-glob-to-any-file: '**/*.js'
+
+config:
+  - changed-files:
+      - any-glob-to-any-file: 
+          - '.github/**'
+          - '.vscode/**'
+          - '**/*.yml'
+          - '**/*.yaml'
+          - '**/*.json'
