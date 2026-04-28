@@ -1,0 +1,52 @@
+{
+  "name": "Xenon Airdrop Ultimate",
+  "short_name": "Xenon Airdrop",
+  "description": "Task tracker khusus hunter airdrop dengan fitur lengkap",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0a2a",
+  "theme_color": "#FFD700",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "https://via.placeholder.com/72x72.png?text=XE",
+      "sizes": "72x72",
+      "type": "image/png"
+    },
+    {
+      "src": "https://via.placeholder.com/96x96.png?text=XE",
+      "sizes": "96x96",
+      "type": "image/png"
+    },
+    {
+      "src": "https://via.placeholder.com/128x128.png?text=XE",
+      "sizes": "128x128",
+      "type": "image/png"
+    },
+    {
+      "src": "https://via.placeholder.com/144x144.png?text=XE",
+      "sizes": "144x144",
+      "type": "image/png"
+    },
+    {
+      "src": "https://via.placeholder.com/152x152.png?text=XE",
+      "sizes": "152x152",
+      "type": "image/png"
+    },
+    {
+      "src": "https://via.placeholder.com/192x192.png?text=XE",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "https://via.placeholder.com/384x384.png?text=XE",
+      "sizes": "384x384",
+      "type": "image/png"
+    },
+    {
+      "src": "https://via.placeholder.com/512x512.png?text=XE",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
