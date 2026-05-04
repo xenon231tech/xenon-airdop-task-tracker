@@ -1,0 +1,12 @@
+{
+  "miniapp": {
+    "version": "1",
+    "name": "XENON Airdrop Tracker",
+    "homeUrl": "https://xenon231tech.github.io/xenon-airdop-task-tracker",
+    "iconUrl": "https://xenon231tech.github.io/xenon-airdop-task-tracker/icon.png",
+    "splashImageUrl": "https://xenon231tech.github.io/xenon-airdop-task-tracker/splash.png",
+    "splashBackgroundColor": "#0a0a0f",
+    "primaryCategory": "utilities",
+    "tags": ["airdrop", "tracker", "task", "crypto", "web3"]
+  }
+}
