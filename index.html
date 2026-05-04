@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>XENON Airdrop Tracker</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #0a0a0f;
+            color: white;
+            padding: 20px;
+            padding-bottom: 80px;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            padding: 20px;
+            border-radius: 20px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            color: #fbbf24;
+        }
+
+        .header p {
+            font-size: 12px;
+            opacity: 0.7;
+            margin-top: 5px;
+        }
+
+        /* Stats Card */
+        .stats {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            background: #1a1a2e;
+            flex: 1;
+            padding: 15px;
+            border-radius: 16px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 28px;
+            font-weight: bold;
+            color: #fbbf24;
+        }
+
+        .stat-label {
+            font-size: 11px;
+            opacity: 0.7;
+            margin-top: 5px;
+        }
+
+        /* Progress Bar */
+        .progress-section {
+            background: #1a1a2e;
+            padding: 20px;
+            border-radius: 16px;
+            margin-bottom: 20px;
+        }
+
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+
+        .progress-bar {
+            background: #333;
+            border-radius: 10px;
+            height: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: #fbbf24;
+            width: 0%;
+            height: 100%;
+            border-radius: 10px;
+            transition: width 0.3s;
+        }
+
+        /* Form */
+        .form-section {
+            background: #1a1a2e;
+            padding: 20px;
+            border-radius: 16px;
+            margin-bottom: 20px;
+        }
+
+        .form-title {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #fbbf24;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        input, select, textarea {
+            background: #0a0a0f;
+            border: 1px solid #333;
+            padding: 12px;
+            border-radius: 12px;
+            color: white;
+            font-size: 14px;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #fbbf24;
+        }
+
+        button {
+            background: #fbbf24;
+            color: #1a1a2e;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* Controls */
+        .controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .search-box {
+            flex: 1;
+            background: #1a1a2e;
+            border: none;
+            padding: 12px;
+            border-radius: 30px;
+            color: white;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .filter-chip {
+            background: #1a1a2e;
+            padding: 8px 16px;
+            border-radius: 30px;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
+        .filter-chip.active {
+            background: #fbbf24;
+            color: #1a1a2e;
+        }
+
+        /* Tabel */
+        .task-container {
+            background: #1a1a2e;
+            border-radius: 16px;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            text-align: left;
+            padding: 15px;
+            background: #0a0a0f;
+            color: #fbbf24;
+            font-size: 12px;
+        }
+
+        td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #333;
+            font-size: 13px;
+        }
+
+        .status-badge {
+            background: #333;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            cursor: pointer;
+            display: inline-block;
+        }
+
+        .status-badge.done {
+            background: #10b981;
+            color: white;
+        }
+
+        .website-link {
+            color: #60a5fa;
+            text-decoration: none;
+            font-size: 12px;
+        }
+
+        .task-btn {
+            background: #333;
+            border: none;
+            padding: 4px 10px;
+            border-radius: 12px;
+            margin: 0 2px;
+            cursor: pointer;
+        }
+
+        /* Donasi */
+        .donation-section {
+            background: #1a1a2e;
+            padding: 20px;
+            border-radius: 16px;
+            margin-top: 20px;
+        }
+
+        .donation-title {
+            font-size: 16px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 15px;
+            color: #fbbf24;
+        }
+
+        .donation-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+        }
+
+        .donation-card {
+            background: #0a0a0f;
+            padding: 12px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .donation-card h4 {
+            color: #fbbf24;
+            margin-bottom: 8px;
+        }
+
+        .donation-card p {
+            font-size: 10px;
+            font-family: monospace;
+            word-break: break-all;
+            background: #1a1a2e;
+            padding: 8px;
+            border-radius: 8px;
+            margin: 8px 0;
+        }
+
+        .donation-card button {
+            background: #fbbf24;
+            padding: 6px 12px;
+            font-size: 11px;
+        }
+
+        .sociabuzz-btn {
+            background: #fbbf24;
+            color: #1a1a2e;
+            padding: 10px 20px;
+            border-radius: 30px;
+            text-decoration: none;
+            display: inline-block;
+            font-weight: bold;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 80px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #fbbf24;
+            color: #1a1a2e;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-size: 12px;
+            display: none;
+            white-space: nowrap;
+            z-index: 100;
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <h1>⚡ XENON AIRDROP TRACKER</h1>
+    <p>Task Tracker • Donation • Mini App</p>
+</div>
+
+<!-- STATS -->
+<div class="stats">
+    <div class="stat-card">
+        <div class="stat-number" id="totalCount">0</div>
+        <div class="stat-label">Total Tasks</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-number" id="completedCount">0</div>
+        <div class="stat-label">Done</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-number" id="pendingCount">0</div>
+        <div class="stat-label">Pending</div>
+    </div>
+</div>
+
+<!-- PROGRESS -->
+<div class="progress-section">
+    <div class="progress-label">
+        <span>📊 Overall Progress</span>
+        <span id="progressPercent">0%</span>
+    </div>
+    <div class="progress-bar">
+        <div class="progress-fill" id="progressFill"></div>
+    </div>
+</div>
+
+<!-- FORM TAMBAH TASK -->
+<div class="form-section">
+    <div class="form-title">➕ Add New Task + Website Link</div>
+    <div class="form-grid">
+        <input type="text" id="taskName" placeholder="Project name *">
+        <select id="taskCategory">
+            <option value="DeFi">📊 DeFi</option>
+            <option value="NFT">🎨 NFT</option>
+            <option value="L1">⛓️ Layer 1</option>
+            <option value="L2">⚡ Layer 2</option>
+            <option value="GameFi">🎮 GameFi</option>
+        </select>
+        <select id="taskPriority">
+            <option value="High">🔥 High Priority</option>
+            <option value="Mid">⚡ Mid Priority</option>
+            <option value="Low">💤 Low Priority</option>
+        </select>
+        <input type="date" id="taskDate">
+        <input type="url" id="taskWebsite" placeholder="🔗 Project website (https://...)">
+        <textarea id="taskDesc" placeholder="Notes / steps..." rows="2"></textarea>
+    </div>
+    <button onclick="addTask()">+ Create Task</button>
+</div>
+
+<!-- SEARCH & FILTER -->
+<div class="controls">
+    <input type="text" class="search-box" id="searchInput" placeholder="🔍 Search tasks...">
+    <div class="filter-group" id="filterGroup">
+        <button class="filter-chip active" data-filter="all" onclick="setFilter('all')">All</button>
+        <button class="filter-chip" data-filter="DeFi" onclick="setFilter('DeFi')">DeFi</button>
+        <button class="filter-chip" data-filter="NFT" onclick="setFilter('NFT')">NFT</button>
+        <button class="filter-chip" data-filter="L1" onclick="setFilter('L1')">L1</button>
+        <button class="filter-chip" data-filter="L2" onclick="setFilter('L2')">L2</button>
+        <button class="filter-chip" data-filter="GameFi" onclick="setFilter('GameFi')">GameFi</button>
+    </div>
+    <div style="display: flex; gap: 8px;">
+        <button class="filter-chip" onclick="exportCSV()">📊 CSV</button>
+        <button class="filter-chip" onclick="exportJSON()">📤 JSON</button>
+        <button class="filter-chip" onclick="importJSON()">📥 Import</button>
+    </div>
+</div>
+
+<!-- TASK TABLE -->
+<div class="task-container">
+    <table>
+        <thead>
+            <tr><th>Project</th><th>Category</th><th>Priority</th><th>Deadline</th><th>Website</th><th>Status</th><th>Actions</th></tr>
+        </thead>
+        <tbody id="taskList"></tbody>
+    </table>
+</div>
+
+<!-- DONATION SECTION -->
+<div class="donation-section">
+    <div class="donation-title">💖 Support This Project</div>
+    <div style="text-align: center; margin-bottom: 15px;">
+        <a href="https://sociabuzz.com/xenonsixtytwo/tribe" target="_blank" class="sociabuzz-btn">🎁 Donate via Sociabuzz</a>
+    </div>
+    <div class="donation-grid">
+        <div class="donation-card"><h4>₿ Bitcoin</h4><p id="btcAddr">bc1pcuy0x7ynf65y50flud3axn0nr267zx4mrfw6879eavkx5yct7slqxgcg3g</p><button onclick="copyAddress('btcAddr')">📋 Copy</button></div>
+        <div class="donation-card"><h4>🟡 EVM (ETH/USDT/BNB)</h4><p id="evmAddr">0xf1D8356475095c0c709AF9f76e9a1AC5E9ff5D5d</p><button onclick="copyAddress('evmAddr')">📋 Copy</button></div>
+        <div class="donation-card"><h4>◎ Solana</h4><p id="solAddr">7H9HdUuxCKkmzUmSedfCueYvZzXZYzhQBng9u6jA4813</p><button onclick="copyAddress('solAddr')">📋 Copy</button></div>
+    </div>
+</div>
+
+<div id="toast" class="toast"></div>
+
+<!-- FARCASTER SDK + JAVASCRIPT -->
+<script src="https://cdn.jsdelivr.net/npm/@farcaster/frame-sdk@latest/dist/index.min.js"></script>
+<script>
+    // ========== FARCASTER CONNECTION ==========
+    if (window.FarcasterFrameSDK) {
+        window.FarcasterFrameSDK.actions.ready();
+        console.log('✅ Farcaster Mini App connected');
+    }
+
+    // ========== DATA ==========
+    let tasks = [];
+    let currentFilter = 'all';
+    let currentSearch = '';
+
+    // Load from localStorage
+    function loadTasks() {
+        const saved = localStorage.getItem('xenonTasks');
+        if (saved) tasks = JSON.parse(saved);
+        renderAll();
+    }
+
+    function saveTasks() {
+        localStorage.setItem('xenonTasks', JSON.stringify(tasks));
+    }
+
+    // Render
+    function renderTasks() {
+        const tbody = document.getElementById('taskList');
+        if (!tbody) return;
+        
+        let filtered = tasks.filter(t => currentFilter === 'all' || t.category === currentFilter);
+        if (currentSearch) filtered = filtered.filter(t => t.name.toLowerCase().includes(currentSearch));
+        
+        tbody.innerHTML = filtered.map(task => `
+            <tr>
+                <td>${escapeHtml(task.name)}</td>
+                <td>${task.category}</td>
+                <td>${task.priority}</td>
+                <td>${task.deadline || '-'}</td>
+                <td>${task.website ? `<a href="${task.website}" target="_blank" class="website-link">🔗 Visit</a>` : '-'}</td>
+                <td><span class="status-badge ${task.status === 'Done' ? 'done' : ''}" onclick="toggleStatus(${task.id})">${task.status || 'Pending'}</span></td>
+                <td><button class="task-btn" onclick="deleteTask(${task.id})">🗑️</button></td>
+            </tr>
+        `).join('');
+    }
+
+    function renderAll() {
+        renderTasks();
+        updateStats();
+    }
+
+    // Stats
+    function updateStats() {
+        const total = tasks.length;
+        const completed = tasks.filter(t => t.status === 'Done').length;
+        const percent = total === 0 ? 0 : Math.round((completed / total) * 100);
+        document.getElementById('totalCount').innerText = total;
+        document.getElementById('completedCount').innerText = completed;
+        document.getElementById('pendingCount').innerText = total - completed;
+        document.getElementById('progressPercent').innerText = percent + '%';
+        document.getElementById('progressFill').style.width = percent + '%';
+    }
+
+    // CRUD
+    function addTask() {
+        const name = document.getElementById('taskName')?.value.trim();
+        if (!name) { showToast('Project name required!'); return; }
+        tasks.push({
+            id: Date.now(),
+            name: name,
+            category: document.getElementById('taskCategory')?.value || 'DeFi',
+            priority: document.getElementById('taskPriority')?.value || 'Mid',
+            desc: document.getElementById('taskDesc')?.value || '',
+            deadline: document.getElementById('taskDate')?.value || '',
+            website: document.getElementById('taskWebsite')?.value || '',
+            status: 'Pending'
+        });
+        saveTasks();
+        renderAll();
+        showToast('Task added!');
+        document.getElementById('taskName').value = '';
+        document.getElementById('taskDesc').value = '';
+        document.getElementById('taskDate').value = '';
+        document.getElementById('taskWebsite').value = '';
+    }
+
+    function deleteTask(id) {
+        if (confirm('Delete this task?')) {
+            tasks = tasks.filter(t => t.id !== id);
+            saveTasks();
+            renderAll();
+            showToast('Task deleted');
+        }
+    }
+
+    function toggleStatus(id) {
+        const task = tasks.find(t => t.id === id);
+        if (task) {
+            task.status = task.status === 'Done' ? 'Pending' : 'Done';
+            saveTasks();
+            renderAll();
+        }
+    }
+
+    // Filter & Search
+    function setFilter(category) {
+        currentFilter = category;
+        document.querySelectorAll('.filter-chip').forEach(chip => chip.classList.remove('active'));
+        document.querySelector(`.filter-chip[data-filter="${category}"]`)?.classList.add('active');
+        renderTasks();
+    }
+
+    document.getElementById('searchInput')?.addEventListener('input', (e) => {
+        currentSearch = e.target.value.toLowerCase();
+        renderTasks();
+    });
+
+    // Export/Import
+    function exportCSV() {
+        let csv = "Name,Category,Priority,Deadline,Website,Status\n";
+        tasks.forEach(t => { csv += `"${t.name}",${t.category},${t.priority},${t.deadline},${t.website},${t.status}\n`; });
+        downloadFile(csv, 'csv', 'xenon-tasks.csv');
+        showToast('CSV exported!');
+    }
+
+    function exportJSON() {
+        downloadFile(JSON.stringify(tasks, null, 2), 'json', 'xenon-tasks.json');
+        showToast('JSON exported!');
+    }
+
+    function downloadFile(content, type, filename) {
+        const blob = new Blob([content], { type: `text/${type}` });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = filename;
+        a.click();
+        URL.revokeObjectURL(a.href);
+    }
+
+    function importJSON() {
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.accept = '.json';
+        input.onchange = (e) => {
+            const file = e.target.files[0];
+            const reader = new FileReader();
+            reader.onload = (ev) => {
+                try {
+                    const imported = JSON.parse(ev.target.result);
+                    if (Array.isArray(imported)) {
+                        tasks = imported;
+                        saveTasks();
+                        renderAll();
+                        showToast('Import successful!');
+                    } else showToast('Invalid format', true);
+                } catch(err) { showToast('Invalid file', true); }
+            };
+            reader.readAsText(file);
+        };
+        input.click();
+    }
+
+    // Donasi
+    function copyAddress(id) {
+        const el = document.getElementById(id);
+        if (el) {
+            navigator.clipboard.writeText(el.innerText);
+            showToast('Address copied!');
+        }
+    }
+
+    // Toast
+    function showToast(msg, isError = false) {
+        const toast = document.getElementById('toast');
+        toast.textContent = msg;
+        toast.style.display = 'block';
+        toast.style.background = isError ? '#ef4444' : '#fbbf24';
+        toast.style.color = isError ? 'white' : '#1a1a2e';
+        setTimeout(() => { toast.style.display = 'none'; }, 2000);
+    }
+
+    function escapeHtml(str) {
+        if (!str) return '';
+        return str.replace(/[&<>]/g, (m) => {
+            if (m === '&') return '&amp;';
+            if (m === '<') return '&lt;';
+            if (m === '>') return '&gt;';
+            return m;
+        });
+    }
+
+    // Expose to global
+    window.addTask = addTask;
+    window.deleteTask = deleteTask;
+    window.toggleStatus = toggleStatus;
+    window.setFilter = setFilter;
+    window.exportCSV = exportCSV;
+    window.exportJSON = exportJSON;
+    window.importJSON = importJSON;
+    window.copyAddress = copyAddress;
+
+    // Start
+    loadTasks();
+</script>
+</body>
+</html>
