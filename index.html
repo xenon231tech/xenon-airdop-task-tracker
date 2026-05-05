@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Xenon Airdrop Task Tracker - Complete Edition</title>
+    <!-- SortableJS untuk drag & drop -->
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+    <!-- Confetti library -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, 'Segoe UI', 'Inter', sans-serif;
+        }
+
+        /* Light/Dark Mode Variables */
+        :root {
+            --bg-gradient-start: #0a0f1e;
+            --bg-gradient-end: #0c1222;
+            --card-bg: rgba(15, 23, 42, 0.8);
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --border-color: rgba(255, 255, 255, 0.08);
+            --task-bg: rgba(15, 23, 42, 0.6);
+            --accent: #facc15;
+            --accent-hover: #eab308;
+            --btn-bg: rgba(255, 255, 255, 0.05);
+            --danger: #ef4444;
+            --success: #4ade80;
+        }
+
+        body.light {
+            --bg-gradient-start: #f0f9ff;
+            --bg-gradient-end: #e0f2fe;
+            --card-bg: rgba(255, 255, 255, 0.9);
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --border-color: rgba(0, 0, 0, 0.08);
+            --task-bg: rgba(255, 255, 255, 0.7);
+            --btn-bg: rgba(0, 0, 0, 0.05);
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
+            min-height: 100vh;
+            padding: 1.5rem 1rem;
+            transition: background 0.3s, color 0.3s;
+            color: var(--text-primary);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Header & Theme Toggle */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .logo-section {
+            flex: 1;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #c084fc, #60a5fa);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .badge {
+            background: rgba(96, 165, 250, 0.2);
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            padding: 0.2rem 0.8rem;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            display: inline-block;
+            margin-top: 0.3rem;
+        }
+
+        .theme-toggle {
+            background: var(--btn-bg);
+            border: 1px solid var(--border-color);
+            padding: 0.5rem 1rem;
+            border-radius: 40px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: 0.2s;
+        }
+
+        /* Stats Card */
+        .stats-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            border-radius: 1.5rem;
+            padding: 1.5rem;
+            border: 1px solid var(--border-color);
+            margin-bottom: 1.5rem;
+        }
+
+        .points-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .points-box {
+            background: var(--task-bg);
+            border-radius: 1rem;
+            padding: 0.5rem 1.5rem;
+            text-align: center;
+        }
+
+        .points-value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--accent);
+        }
+
+        .progress-container {
+            margin: 1rem 0;
+        }
+
+        .progress-bar-bg {
+            background: #1e293b;
+            border-radius: 40px;
+            height: 12px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, var(--accent), var(--accent-hover));
+            width: 0%;
+            height: 100%;
+            transition: width 0.3s;
+        }
+
+        /* Timer */
+        .timer-card {
+            background: var(--card-bg);
+            border-radius: 1rem;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            border: 1px solid var(--border-color);
+        }
+
+        .timer-digits {
+            font-size: 1.5rem;
+            font-weight: bold;
+            font-family: monospace;
+            color: var(--accent);
+        }
+
+        /* Filter & Action Buttons */
+        .filter-bar {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 1.5rem;
+        }
+
+        .filter-btn {
+            padding: 0.4rem 1rem;
+            border-radius: 40px;
+            background: var(--btn-bg);
+            border: 1px solid var(--border-color);
+            cursor: pointer;
+            color: var(--text-primary);
+        }
+
+        .filter-btn.active {
+            background: var(--accent);
+            color: #0f172a;
+            border-color: var(--accent);
+        }
+
+        .action-group {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+            justify-content: flex-end;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border-radius: 40px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            background: var(--btn-bg);
+            color: var(--text-primary);
+            transition: 0.2s;
+            font-size: 0.8rem;
+        }
+
+        .btn-primary {
+            background: #3b82f6;
+            color: white;
+        }
+
+        .btn-warning {
+            background: rgba(239, 68, 68, 0.2);
+            color: var(--danger);
+            border: 1px solid var(--danger);
+        }
+
+        .btn-success {
+            background: rgba(74, 222, 128, 0.2);
+            color: var(--success);
+            border: 1px solid var(--success);
+        }
+
+        /* Task List */
+        .task-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .task-item {
+            background: var(--task-bg);
+            backdrop-filter: blur(4px);
+            border-radius: 1rem;
+            padding: 1rem;
+            border: 1px solid var(--border-color);
+            transition: 0.2s;
+            cursor: grab;
+        }
+
+        .task-item.dragging {
+            opacity: 0.5;
+            cursor: grabbing;
+        }
+
+        .task-item.blink-green {
+            animation: blink 0.5s ease;
+        }
+
+        @keyframes blink {
+            0% { background: rgba(74, 222, 128, 0); }
+            50% { background: rgba(74, 222, 128, 0.4); }
+            100% { background: var(--task-bg); }
+        }
+
+        .task-content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .task-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex: 2;
+            min-width: 200px;
+        }
+
+        .task-check {
+            width: 22px;
+            height: 22px;
+            cursor: pointer;
+            accent-color: var(--accent);
+        }
+
+        .task-details {
+            flex: 1;
+        }
+
+        .task-name {
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .task-name-input, .task-points-input, .task-link-input {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 0.2rem 0.5rem;
+            border-radius: 0.5rem;
+            font-size: 0.8rem;
+        }
+
+        .task-name-input {
+            width: auto;
+            min-width: 150px;
+        }
+
+        .task-points-input {
+            width: 70px;
+        }
+
+        .task-link-input {
+            width: 180px;
+        }
+
+        .task-points-badge {
+            background: #2d3a5e;
+            padding: 0.2rem 0.6rem;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            color: var(--accent);
+        }
+
+        .task-desc {
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            margin-top: 0.2rem;
+        }
+
+        .task-actions {
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+
+        .icon-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.2rem;
+            padding: 0.3rem;
+            border-radius: 0.5rem;
+            transition: 0.2s;
+        }
+
+        .task-status {
+            font-size: 0.7rem;
+            padding: 0.2rem 0.8rem;
+            border-radius: 30px;
+            background: #1e293b;
+            color: #94a3b8;
+        }
+
+        .status-done {
+            background: #14532d;
+            color: #4ade80;
+        }
+
+        /* Notes */
+        .notes-card {
+            background: var(--card-bg);
+            border-radius: 1rem;
+            padding: 1rem;
+            margin-top: 1.5rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .notes-card textarea {
+            width: 100%;
+            background: var(--task-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 2rem;
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+        }
+
+        @media (max-width: 768px) {
+            .task-content {
+                flex-direction: column;
+            }
+            .task-left {
+                width: 100%;
+            }
+            .task-actions {
+                justify-content: flex-end;
+            }
+            .task-name-input, .task-link-input, .task-points-input {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <div class="logo-section">
+            <div class="logo">⟠ XENON AIRDROP</div>
+            <div class="badge">Complete Task Tracker · Season 1</div>
+        </div>
+        <button class="theme-toggle" id="themeToggle">🌙 Dark</button>
+    </div>
+
+    <div class="stats-card">
+        <div class="points-section">
+            <div class="points-box">
+                <div>Total Poin Kamu</div>
+                <div class="points-value" id="totalPoints">0</div>
+            </div>
+            <div id="maxPointsInfo">Maks: 0 poin</div>
+        </div>
+        <div class="progress-container">
+            <div class="progress-bar-bg"><div class="progress-fill" id="progressFill"></div></div>
+            <div class="progress-text" style="display: flex; justify-content: space-between; margin-top: 0.3rem;">
+                <span>Progress tugas</span>
+                <span id="progressPercent">0%</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Timer Deadline -->
+    <div class="timer-card">
+        <div style="font-size: 0.8rem;">⏰ Snapshot Airdrop dalam:</div>
+        <div class="timer-digits" id="timer">-- hari -- jam -- menit -- detik</div>
+    </div>
+
+    <!-- Filter & Actions -->
+    <div class="filter-bar">
+        <button class="filter-btn active" data-filter="all">📋 Semua</button>
+        <button class="filter-btn" data-filter="pending">⏳ Belum</button>
+        <button class="filter-btn" data-filter="done">✅ Selesai</button>
+    </div>
+
+    <div class="action-group">
+        <button class="btn" id="exportBtn">📥 Ekspor JSON</button>
+        <input type="file" id="importFile" accept=".json" style="display: none;">
+        <button class="btn" id="importBtn">📤 Impor JSON</button>
+        <button class="btn btn-warning" id="resetBtn">⟳ Reset Semua</button>
+    </div>
+
+    <div class="task-list" id="taskListContainer"></div>
+
+    <!-- Notes -->
+    <div class="notes-card">
+        <div>📝 Catatan Pribadi (Wallet Address / Referral Code)</div>
+        <textarea rows="3" id="notesText" placeholder="Contoh: Wallet: 0x...\nReferral: XENON123"></textarea>
+    </div>
+
+    <footer>✅ Centang tugas → otomatis tersimpan. Drag & drop untuk urutkan. Klik ✏️ edit task langsung.</footer>
+</div>
+
+<script>
+    // ======================= DEFAULT TASKS =========================
+    let TASKS_DATA = [
+        { id: 1, name: "Follow Twitter Xenon", desc: "Follow @XenonProtocol", points: 100, link: "https://twitter.com/xenonprotocol" },
+        { id: 2, name: "Join Discord", desc: "Join server & verifikasi", points: 150, link: "https://discord.gg/xenon" },
+        { id: 3, name: "Join Telegram Channel", desc: "Subscribe channel", points: 100, link: "https://t.me/xenon_ann" },
+        { id: 4, name: "Retweet & Like", desc: "Retweet pinned campaign", points: 80, link: "https://twitter.com/xenonprotocol/status/123" },
+        { id: 5, name: "Register di Dashboard", desc: "Buat akun & hubungkan wallet", points: 250, link: "https://app.xenon.xyz" },
+        { id: 6, name: "Mint testnet NFT", desc: "Claim testnet badge", points: 200, link: "https://testnet.xenon.xyz/mint" },
+        { id: 7, name: "Invite 1 teman", desc: "Dapatkan kode referral", points: 120, link: "#" },
+        { id: 8, name: "Quiz Airdrop", desc: "Jawab kuis (3 soal)", points: 90, link: "#" }
+    ];
+
+    let taskStatus = {};
+    let currentFilter = "all";
+    let sortableInstance = null;
+
+    const STORAGE_KEY = "xenon_complete_data";
+    const MAX_POINTS = TASKS_DATA.reduce((s, t) => s + t.points, 0);
+    document.getElementById("maxPointsInfo").innerText = `Maks: ${MAX_POINTS} poin`;
+
+    // ======================= LOAD/SAVE =========================
+    function loadAllData() {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        if (saved) {
+            try {
+                const data = JSON.parse(saved);
+                if (data.tasks) TASKS_DATA = data.tasks;
+                if (data.status) taskStatus = data.status;
+                if (data.notes !== undefined) document.getElementById("notesText").value = data.notes;
+                // pastikan semua taskId ada di status
+                TASKS_DATA.forEach(task => { if (typeof taskStatus[task.id] !== 'boolean') taskStatus[task.id] = false; });
+            } catch(e) { resetAll(); }
+        } else {
+            resetAll();
+        }
+        saveFullData();
+        updateMaxPoints();
+    }
+
+    function resetAll() {
+        taskStatus = {};
+        TASKS_DATA.forEach(task => { taskStatus[task.id] = false; });
+        document.getElementById("notesText").value = "";
+        saveFullData();
+    }
+
+    function saveFullData() {
+        const fullData = {
+            tasks: TASKS_DATA,
+            status: taskStatus,
+            notes: document.getElementById("notesText").value
+        };
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(fullData));
+        updateMaxPoints();
+    }
+
+    function updateMaxPoints() {
+        const newMax = TASKS_DATA.reduce((s, t) => s + t.points, 0);
+        document.getElementById("maxPointsInfo").innerText = `Maks: ${newMax} poin`;
+        renderAll();
+    }
+
+    // ======================= CRUD TASK =========================
+    function addNewTask() {
+        const newId = Date.now();
+        TASKS_DATA.push({
+            id: newId,
+            name: "Task Baru",
+            desc: "Deskripsi tugas",
+            points: 50,
+            link: "#"
+        });
+        taskStatus[newId] = false;
+        saveFullData();
+        renderAll();
+    }
+
+    function updateTaskField(taskId, field, value) {
+        const task = TASKS_DATA.find(t => t.id == taskId);
+        if (task) {
+            task[field] = value;
+            saveFullData();
+            renderAll();
+        }
+    }
+
+    function deleteTask(taskId) {
+        if (confirm("Hapus tugas ini?")) {
+            TASKS_DATA = TASKS_DATA.filter(t => t.id != taskId);
+            delete taskStatus[taskId];
+            saveFullData();
+            renderAll();
+        }
+    }
+
+    function setTaskStatus(taskId, checked) {
+        taskStatus[taskId] = checked;
+        saveFullData();
+        renderAll();
+        // cek apakah semua task sudah selesai
+        const allDone = TASKS_DATA.every(task => taskStatus[task.id] === true);
+        if (allDone && TASKS_DATA.length > 0) {
+            canvasConfetti({ particleCount: 150, spread: 70, origin: { y: 0.6 } });
+        }
+        // blink effect on checkbox click
+        const taskEl = document.querySelector(`.task-item[data-task-id='${taskId}']`);
+        if (taskEl) taskEl.classList.add('blink-green');
+        setTimeout(() => taskEl?.classList.remove('blink-green'), 500);
+    }
+
+    // ======================= RENDER =========================
+    function renderAll() {
+        const container = document.getElementById("taskListContainer");
+        let filteredTasks = TASKS_DATA.filter(task => {
+            if (currentFilter === "done") return taskStatus[task.id] === true;
+            if (currentFilter === "pending") return taskStatus[task.id] === false;
+            return true;
+        });
+
+        let html = "";
+        filteredTasks.forEach(task => {
+            const isDone = taskStatus[task.id];
+            const statusClass = isDone ? "status-done" : "";
+            const statusText = isDone ? "✓ Selesai" : "⏳ Belum";
+            html += `
+                <div class="task-item" data-task-id="${task.id}">
+                    <div class="task-content">
+                        <div class="task-left">
+                            <input type="checkbox" class="task-check" data-id="${task.id}" ${isDone ? "checked" : ""}>
+                            <div class="task-details">
+                                <div class="task-name">
+                                    <input type="text" class="task-name-input" data-id="${task.id}" data-field="name" value="${escapeHtml(task.name)}" style="max-width:180px;">
+                                    <span class="task-points-badge">
+                                        +<input type="number" class="task-points-input" data-id="${task.id}" data-field="points" value="${task.points}" style="width:60px;"> pts
+                                    </span>
+                                </div>
+                                <div class="task-desc">
+                                    <input type="text" class="task-link-input" data-id="${task.id}" data-field="link" value="${escapeHtml(task.link)}" placeholder="Link tugas" style="width:200px;">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="task-actions">
+                            <button class="icon-btn delete-task" data-id="${task.id}">🗑️</button>
+                            <div class="task-status ${statusClass}">${statusText}</div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        });
+
+        if (TASKS_DATA.length === 0) html = "<div style='text-align:center;padding:2rem;'>Belum ada task. Klik '+' untuk tambah</div>";
+        container.innerHTML = html;
+
+        // attach event listeners
+        document.querySelectorAll(".task-check").forEach(cb => {
+            cb.addEventListener("change", (e) => setTaskStatus(parseInt(e.target.dataset.id), e.target.checked));
+        });
+        document.querySelectorAll(".task-name-inp
