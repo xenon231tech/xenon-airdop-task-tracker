@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>XENON Airdrop Tracker | Professional Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f0f2f5;
+            color: #1a1a2e;
+            min-height: 100vh;
+        }
+        .container { max-width: 1400px; margin: 0 auto; padding: 24px; }
+        
+        /* Navbar */
+        .navbar {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 20px 32px;
+            margin-bottom: 28px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            border: 1px solid #e8ecf0;
+        }
+        .logo h1 {
+            font-size: 22px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #f59e0b, #ea580c);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .logo p { font-size: 11px; color: #6b7280; margin-top: 4px; }
+        .nav-stats { display: flex; gap: 28px; }
+        .nav-stat { text-align: center; }
+        .nav-stat .value { font-size: 24px; font-weight: 800; color: #ea580c; }
+        .nav-stat .label { font-size: 11px; color: #6b7280; }
+        
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 28px;
+        }
+        .stat-card {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            border: 1px solid #e8ecf0;
+            transition: all 0.2s;
+        }
+        .stat-card:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.08); }
+        .stat-icon { font-size: 28px; color: #f59e0b; margin-bottom: 12px; }
+        .stat-title { font-size: 13px; color: #6b7280; margin-bottom: 8px; }
+        .stat-number { font-size: 28px; font-weight: 800; color: #1a1a2e; }
+        
+        /* Progress Card */
+        .progress-card {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 24px;
+            margin-bottom: 28px;
+            border: 1px solid #e8ecf0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+        .progress-header { display: flex; justify-content: space-between; margin-bottom: 16px; font-weight: 600; color: #374151; }
+        .progress-bar-container { background: #e5e7eb; border-radius: 100px; height: 10px; overflow: hidden; }
+        .progress-fill { background: linear-gradient(90deg, #f59e0b, #ea580c); width: 0%; height: 100%; border-radius: 100px; transition: width 0.5s ease; }
+        
+        /* Form Card */
+        .form-card {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 24px;
+            margin-bottom: 28px;
+            border: 1px solid #e8ecf0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+        .card-header { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; padding-bottom: 12px; border-bottom: 1px solid #e8ecf0; }
+        .card-header i { font-size: 22px; color: #f59e0b; }
+        .card-header h2 { font-size: 18px; font-weight: 600; color: #1a1a2e; }
+        .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; margin-bottom: 20px; }
+        .input-group { display: flex; flex-direction: column; gap: 8px; }
+        .input-group label { font-size: 12px; font-weight: 600; color: #4b5563; }
+        input, select, textarea {
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            padding: 12px 16px;
+            border-radius: 12px;
+            color: #1a1a2e;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #f59e0b;
+            box-shadow: 0 0 0 3px rgba(245,158,11,0.1);
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #f59e0b, #ea580c);
+            border: none;
+            padding: 12px 28px;
+            border-radius: 40px;
+            font-weight: 600;
+            cursor: pointer;
+            color: white;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+        .btn-primary:hover { transform: scale(1.02); box-shadow: 0 8px 20px rgba(245,158,11,0.3); }
+        
+        /* Filter Bar */
+        .filter-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+        .filter-group { display: flex; gap: 8px; flex-wrap: wrap; }
+        .filter-chip {
+            background: #f3f4f6;
+            border: 1px solid #e5e7eb;
+            padding: 8px 18px;
+            border-radius: 40px;
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: #4b5563;
+        }
+        .filter-chip:hover { background: #e5e7eb; }
+        .filter-chip.active { background: linear-gradient(135deg, #f59e0b, #ea580c); color: white; border-color: transparent; }
+        .search-box {
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            padding: 10px 18px;
+            border-radius: 40px;
+            width: 240px;
+            font-size: 13px;
+        }
+        .action-btns { display: flex; gap: 8px; }
+        .icon-btn {
+            background: #f3f4f6;
+            border: 1px solid #e5e7eb;
+            padding: 8px 16px;
+            border-radius: 40px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 500;
+            transition: all 0.2s;
+            color: #4b5563;
+        }
+        .icon-btn:hover { background: #e5e7eb; }
+        
+        /* Table */
+        .table-container {
+            background: #ffffff;
+            border-radius: 20px;
+            overflow-x: auto;
+            margin-bottom: 28px;
+            border: 1px solid #e8ecf0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+        table { width: 100%; border-collapse: collapse; }
+        th {
+            text-align: left;
+            padding: 16px;
+            background: #fafbfc;
+            font-weight: 600;
+            font-size: 12px;
+            color: #6b7280;
+            border-bottom: 1px solid #e8ecf0;
+        }
+        td {
+            padding: 16px;
+            border-bottom: 1px solid #f0f2f5;
+            font-size: 13px;
+            color: #374151;
+        }
+        tr:hover { background: #fafbfc; }
+        .status-badge {
+            padding: 4px 14px;
+            border-radius: 40px;
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-block;
+        }
+        .status-pending { background: #fef3c7; color: #d97706; }
+        .status-done { background: #d1fae5; color: #059669; }
+        .visit-link {
+            background: #eff6ff;
+            padding: 6px 14px;
+            border-radius: 40px;
+            text-decoration: none;
+            color: #3b82f6;
+            font-size: 11px;
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: 0.2s;
+        }
+        .visit-link:hover { background: #3b82f6; color: white; }
+        .action-btn {
+            background: #f3f4f6;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: 0.2s;
+            color: #ef4444;
+        }
+        .action-btn:hover { background: #fee2e2; }
+        
+        /* Donation */
+        .donation-section {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 24px;
+            border: 1px solid #e8ecf0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+        .donation-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .donation-item {
+            background: #fafbfc;
+            border-radius: 16px;
+            padding: 20px;
+            text-align: center;
+            border: 1px solid #e8ecf0;
+            transition: 0.2s;
+        }
+        .donation-item:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+        .donation-item i { font-size: 32px; color: #f59e0b; margin-bottom: 12px; }
+        .donation-item h4 { font-size: 14px; margin-bottom: 10px; color: #1a1a2e; }
+        .donation-item p {
+            font-size: 10px;
+            font-family: monospace;
+            word-break: break-all;
+            background: #ffffff;
+            padding: 10px;
+            border-radius: 12px;
+            margin: 10px 0;
+            border: 1px solid #e5e7eb;
+            color: #4b5563;
+        }
+        .donation-item button {
+            background: #f3f4f6;
+            border: 1px solid #e5e7eb;
+            padding: 6px 16px;
+            border-radius: 30px;
+            cursor: pointer;
+            color: #f59e0b;
+            font-size: 11px;
+            font-weight: 500;
+            transition: 0.2s;
+        }
+        .donation-item button:hover { background: #f59e0b; color: white; }
+        .sociabuzz-btn {
+            background: linear-gradient(135deg, #f59e0b, #ea580c);
+            padding: 12px 24px;
+            border-radius: 40px;
+            text-decoration: none;
+            color: white;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: 0.2s;
+        }
+        .sociabuzz-btn:hover { transform: scale(1.02); box-shadow: 0 8px 20px rgba(245,158,11,0.3); }
+        
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #1a1a2e;
+            padding: 12px 24px;
+            border-radius: 40px;
+            color: white;
+            font-size: 13px;
+            font-weight: 500;
+            display: none;
+            z-index: 1000;
+            animation: slideInRight 0.3s ease;
+        }
+        @keyframes slideInRight {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        @media (max-width: 1024px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 768px) {
+            .container { padding: 16px; }
+            .stats-grid { grid-template-columns: 1fr; }
+            .navbar { flex-direction: column; text-align: center; }
+            .filter-bar { flex-direction: column; }
+            .search-box { width: 100%; }
+            .action-btns { width: 100%; justify-content: center; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <!-- Navbar -->
+    <div class="navbar">
+        <div class="logo">
+            <h1><i class="fas fa-bolt"></i> XENON AIRDROP</h1>
+            <p>Ultimate Task Tracker • Professional Dashboard</p>
+        </div>
+        <div class="nav-stats">
+            <div class="nav-stat"><div class="value" id="navTotal">0</div><div class="label">Total Tasks</div></div>
+            <div class="nav-stat"><div class="value" id="navDone">0</div><div class="label">Completed</div></div>
+            <div class="nav-stat"><div class="value" id="navProgress">0%</div><div class="label">Progress</div></div>
+        </div>
+    </div>
+
+    <!-- 4 Stat Cards -->
+    <div class="stats-grid">
+        <div class="stat-card"><div class="stat-icon"><i class="fas fa-tasks"></i></div><div class="stat-title">Total Tasks</div><div class="stat-number" id="statTotal">0</div></div>
+        <div class="stat-card"><div class="stat-icon"><i class="fas fa-check-circle"></i></div><div class="stat-title">Completed</div><div class="stat-number" id="statCompleted">0</div></div>
+        <div class="stat-card"><div class="stat-icon"><i class="fas fa-hourglass-half"></i></div><div class="stat-title">In Progress</div><div class="stat-number" id="statPending">0</div></div>
+        <div class="stat-card"><div class="stat-icon"><i class="fas fa-chart-line"></i></div><div class="stat-title">Completion Rate</div><div class="stat-number" id="statPercent">0%</div></div>
+    </div>
+
+    <!-- Progress -->
+    <div class="progress-card">
+        <div class="progress-header"><span>📊 Overall Progress</span><span id="progressPercentText">0%</span></div>
+        <div class="progress-bar-container"><div class="progress-fill" id="progressFill"></div></div>
+    </div>
+
+    <!-- Form Tambah Task -->
+    <div class="form-card">
+        <div class="card-header"><i class="fas fa-plus-circle"></i><h2>Create New Task</h2></div>
+        <div class="form-grid">
+            <div class="input-group"><label>Project Name *</label><input type="text" id="taskName" placeholder="e.g., zkSync Era"></div>
+            <div class="input-group"><label>Category</label><select id="taskCategory"><option value="DeFi">📊 DeFi</option><option value="NFT">🎨 NFT</option><option value="L1">⛓️ Layer 1</option><option value="L2">⚡ Layer 2</option><option value="GameFi">🎮 GameFi</option><option value="Social">💬 SocialFi</option></select></div>
+            <div class="input-group"><label>Priority</label><select id="taskPriority"><option value="High">🔥 High Priority</option><option value="Mid">⚡ Mid Priority</option><option value="Low">💤 Low Priority</option></select></div>
+            <div class="input-group"><label>Deadline</label><input type="date" id="taskDate"></div>
+            <div class="input-group"><label>Website URL</label><input type="url" id="taskWebsite" placeholder="https://example.com"></div>
+            <div class="input-group"><label>Notes</label><textarea id="taskDesc" rows="1" placeholder="Add notes or steps..."></textarea></div>
+        </div>
+        <button class="btn-primary" onclick="addTask()"><i class="fas fa-save"></i> Create Task</button>
+    </div>
+
+    <!-- Filter & Search -->
+    <div class="filter-bar">
+        <div class="filter-group" id="filterGroup">
+            <button class="filter-chip active" data-filter="all" onclick="setFilter('all')">All</button>
+            <button class="filter-chip" data-filter="DeFi" onclick="setFilter('DeFi')">📊 DeFi</button>
+            <button class="filter-chip" data-filter="NFT" onclick="setFilter('NFT')">🎨 NFT</button>
+            <button class="filter-chip" data-filter="L1" onclick="setFilter('L1')">⛓️ L1</button>
+            <button class="filter-chip" data-filter="L2" onclick="setFilter('L2')">⚡ L2</button>
+            <button class="filter-chip" data-filter="GameFi" onclick="setFilter('GameFi')">🎮 GameFi</button>
+            <button class="filter-chip" data-filter="Social" onclick="setFilter('Social')">💬 Social</button>
+        </div>
+        <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+            <input type="text" class="search-box" id="searchInput" placeholder="🔍 Search tasks...">
+            <div class="action-btns">
+                <button class="icon-btn" onclick="exportCSV()"><i class="fas fa-file-csv"></i> CSV</button>
+                <button class="icon-btn" onclick="exportJSON()"><i class="fas fa-file-code"></i> JSON</button>
+                <button class="icon-btn" onclick="importJSON()"><i class="fas fa-upload"></i> Import</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Task Table -->
+    <div class="table-container">
+        <table>
+            <thead><tr><th>Project</th><th>Category</th><th>Priority</th><th>Deadline</th><th>Website</th><th>Status</th><th>Actions</th></tr</thead>
+            <tbody id="taskList"></tbody>
+        </table>
+    </div>
+
+    <!-- Donation Section -->
+    <div class="donation-section">
+        <div style="text-align: center; margin-bottom: 24px;">
+            <h2 style="margin-bottom: 12px; color: #1a1a2e;"><i class="fas fa-heart" style="color: #f59e0b;"></i> Support This Project</h2>
+            <a href="https://sociabuzz.com/xenonsixtytwo/tribe" target="_blank" class="sociabuzz-btn"><i class="fas fa-gift"></i> Donate via Sociabuzz</a>
+        </div>
+        <div class="donation-grid">
+            <div class="donation-item"><i class="fab fa-bitcoin"></i><h4>Bitcoin</h4><p id="btcAddr">bc1pcuy0x7ynf65y50flud3axn0nr267zx4mrfw6879eavkx5yct7slqxgcg3g</p><button onclick="copyAddress('btcAddr')"><i class="fas fa-copy"></i> Copy Address</button></div>
+            <div class="donation-item"><i class="fas fa-network-wired"></i><h4>EVM (ETH/USDT/BNB)</h4><p id="evmAddr">0xf1D8356475095c0c709AF9f76e9a1AC5E9ff5D5d</p><button onclick="copyAddress('evmAddr')"><i class="fas fa-copy"></i> Copy Address</button></div>
+            <div class="donation-item"><i class="fab fa-solana"></i><h4>Solana</h4><p id="solAddr">7H9HdUuxCKkmzUmSedfCueYvZzXZYzhQBng9u6jA4813</p><button onclick="copyAddress('solAddr')"><i class="fas fa-copy"></i> Copy Address</button></div>
+        </div>
+    </div>
+</div>
+
+<div id="toast" class="toast"></div>
+
+<script>
+    // ========== DATA TASKS (dengan LocalStorage yang berfungsi) ==========
+    let tasks = [];
+    let currentFilter = 'all';
+    let currentSearch = '';
+
+    // Load dari localStorage saat halaman dibuka
+    function loadTasks() {
+        const saved = localStorage.getItem('xenonTasks_professional');
+        if (saved) {
+            try {
+                tasks = JSON.parse(saved);
+                console.log('✅ Loaded ' + tasks.length + ' tasks from storage');
+            } catch(e) {
+                console.log('Error loading tasks');
+                tasks = getDefaultTasks();
+            }
+        } else {
+            tasks = getDefaultTasks();
+            console.log('📝 Using default tasks');
+        }
+        renderAll();
+    }
+
+    // Data default (contoh tasks)
+    function getDefaultTasks() {
+        return [
+            { id: 1, name: "zkSync Era", category: "L2", priority: "High", desc: "Bridge, swap, deploy contract", deadline: "2026-05-15", website: "https://zksync.io", status: "Pending" },
+            { id: 2, name: "LayerZero", category: "L2", priority: "High", desc: "Cross-chain messaging", deadline: "2026-05-20", website: "https://layerzero.network", status: "Pending" },
+            { id: 3, name: "Scroll", category: "L2", priority: "Mid", desc: "Testnet dApps", deadline: "2026-05-10", website: "https://scroll.io", status: "Done" }
+        ];
+    }
+
+    // Simpan ke localStorage
+    function saveTasks() {
+        localStorage.setItem('xenonTasks_professional', JSON.stringify(tasks));
+        console.log('💾 Saved ' + tasks.length + ' tasks to storage');
+    }
+
+    // Render tabel
+    function renderTasks() {
+        const tbody = document.getElementById('taskList');
+        if (!tbody) return;
+        
+        let filtered = tasks.filter(t => currentFilter === 'all' || t.category === currentFilter);
+        if (currentSearch) filtered = filtered.filter(t => t.name.toLowerCase().includes(currentSearch));
+        
+        if (filtered.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; padding:40px">✨ No tasks yet. Create your first task above!</td></tr>';
+            ret
