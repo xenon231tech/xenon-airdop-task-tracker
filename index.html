@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>XENON ULTIMATE | Task Tracker</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: #f0f2f5;
+            padding: 20px;
+            padding-bottom: 80px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #f59e0b, #ea580c);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            color: white;
+        }
+
+        .logo h1 {
+            font-size: 22px;
+        }
+
+        .logo h1 i {
+            margin-right: 8px;
+        }
+
+        .logo p {
+            font-size: 11px;
+            opacity: 0.8;
+            margin-top: 5px;
+        }
+
+        .header-stats {
+            display: flex;
+            gap: 20px;
+        }
+
+        .header-stat {
+            background: rgba(255,255,255,0.15);
+            padding: 8px 16px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .header-stat .value {
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .header-stat .label {
+            font-size: 10px;
+            opacity: 0.8;
+        }
+
+        /* 4 Cards Stat */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 16px;
+            padding: 16px;
+            text-align: center;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+            border: 1px solid #e5e7eb;
+        }
+
+        .stat-icon {
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+
+        .stat-title {
+            font-size: 12px;
+            color: #6b7280;
+            margin-bottom: 5px;
+        }
+
+        .stat-number {
+            font-size: 28px;
+            font-weight: bold;
+            color: #ea580c;
+        }
+
+        /* Progress Card */
+        .progress-card {
+            background: white;
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 20px;
+            border: 1px solid #e5e7eb;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .progress-bar-container {
+            background: #e5e7eb;
+            border-radius: 20px;
+            height: 8px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, #f59e0b, #ea580c);
+            width: 0%;
+            height: 100%;
+            border-radius: 20px;
+            transition: width 0.3s;
+        }
+
+        /* Form Card */
+        .form-card {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 1px solid #e5e7eb;
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .card-header i {
+            font-size: 20px;
+            color: #f59e0b;
+        }
+
+        .card-header h2 {
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .input-group label {
+            font-size: 11px;
+            font-weight: 600;
+            color: #4b5563;
+        }
+
+        input, select, textarea {
+            padding: 10px 12px;
+            border: 1px solid #e5e7eb;
+            border-radius: 10px;
+            font-size: 13px;
+            background: #f9fafb;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #f59e0b;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #f59e0b, #ea580c);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 13px;
+        }
+
+        .btn-primary:hover {
+            transform: scale(1.02);
+        }
+
+        /* Filter Bar */
+        .filter-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .filter-group {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .filter-chip {
+            background: #f3f4f6;
+            border: 1px solid #e5e7eb;
+            padding: 6px 14px;
+            border-radius: 30px;
+            font-size: 11px;
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        .filter-chip.active {
+            background: linear-gradient(135deg, #f59e0b, #ea580c);
+            color: white;
+            border-color: transparent;
+        }
+
+        .search-box {
+            padding: 8px 16px;
+            border: 1px solid #e5e7eb;
+            border-radius: 30px;
+            width: 200px;
+            background: #f9fafb;
+        }
+
+        /* Table */
+        .table-container {
+            background: white;
+            border-radius: 16px;
+            overflow-x: auto;
+            margin-bottom: 20px;
+            border: 1px solid #e5e7eb;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            text-align: left;
+            padding: 12px;
+            background: #f9fafb;
+            font-size: 11px;
+            font-weight: 600;
+            color: #6b7280;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        td {
+            padding: 12px;
+            font-size: 12px;
+            border-bottom: 1px solid #f0f2f5;
+        }
+
+        tr:hover {
+            background: #f9fafb;
+        }
+
+        .status-badge {
+            padding: 4px 12px;
+            border-radius: 30px;
+            font-size: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-block;
+        }
+
+        .status-pending {
+            background: #fef3c7;
+            color: #d97706;
+        }
+
+        .status-done {
+            background: #d1fae5;
+            color: #059669;
+        }
+
+        .visit-link {
+            background: #eff6ff;
+            padding: 4px 10px;
+            border-radius: 30px;
+            text-decoration: none;
+            color: #3b82f6;
+            font-size: 10px;
+            display: inline-block;
+        }
+
+        .edit-btn, .delete-btn {
+            border: none;
+            padding: 4px 10px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 10px;
+            font-weight: 500;
+            margin: 0 2px;
+        }
+
+        .edit-btn {
+            background: #fef3c7;
+            color: #d97706;
+        }
+
+        .delete-btn {
+            background: #fee2e2;
+            color: #ef4444;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            padding: 24px;
+            max-width: 500px;
+            width: 90%;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        .modal .form-group {
+            margin-bottom: 15px;
+        }
+
+        .modal label {
+            display: block;
+            margin-bottom: 5px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .modal input, .modal select, .modal textarea {
+            width: 100%;
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        /* Donation */
+        .donation-section {
+            background: white;
+            border-radius: 16px;
+            padding: 20px;
+            border: 1px solid #e5e7eb;
+        }
+
+        .donation-title {
+            text-align: center;
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #ea580c;
+        }
+
+        .donation-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        .donation-item {
+            background: #f9fafb;
+            border-radius: 16px;
+            padding: 16px;
+            text-align: center;
+            border: 1px solid #e5e7eb;
+        }
+
+        .donation-item i {
+            font-size: 28px;
+            color: #f59e0b;
+            margin-bottom: 10px;
+        }
+
+        .donation-item h4 {
+            font-size: 13px;
+            margin-bottom: 8px;
+        }
+
+        .donation-item p {
+            font-size: 9px;
+            font-family: monospace;
+            word-break: break-all;
+            background: white;
+            padding: 8px;
+            border-radius: 10px;
+            margin: 10px 0;
+            border: 1px solid #e5e7eb;
+        }
+
+        .donation-item button {
+            background: #f3f4f6;
+            border: 1px solid #e5e7eb;
+            padding: 5px 12px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 10px;
+        }
+
+        .sociabuzz-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #f59e0b, #ea580c);
+            padding: 10px 20px;
+            border-radius: 30px;
+            text-decoration: none;
+            color: white;
+            font-weight: 600;
+            font-size: 12px;
+            margin-top: 10px;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #10b981;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-size: 12px;
+            display: none;
+            z-index: 1100;
+        }
+
+        @media (max-width: 768px) {
+            body { padding: 12px; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .header { flex-direction: column; text-align: center; }
+            .filter-bar { flex-direction: column; }
+            .search-box { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <!-- HEADER -->
+    <div class="header">
+        <div class="logo">
+            <h1>⚡ XENON ULTIMATE</h1>
+            <p>Professional Task Tracker • Airdrop Management</p>
+        </div>
+        <div class="header-stats">
+            <div class="header-stat"><div class="value" id="headerTotal">0</div><div class="label">Total</div></div>
+            <div class="header-stat"><div class="value" id="headerDone">0</div><div class="label">Done</div></div>
+            <div class="header-stat"><div class="value" id="headerProgress">0%</div><div class="label">Progress</div></div>
+        </div>
+    </div>
+
+    <!-- 4 CARDS -->
+    <div class="stats-grid">
+        <div class="stat-card"><div class="stat-icon">📋</div><div class="stat-title">Total Tasks</div><div class="stat-number" id="statTotal">0</div></div>
+        <div class="stat-card"><div class="stat-icon">✅</div><div class="stat-title">Completed</div><div class="stat-number" id="statCompleted">0</div></div>
+        <div class="stat-card"><div class="stat-icon">⏳</div><div class="stat-title">In Progress</div><div class="stat-number" id="statPending">0</div></div>
+        <div class="stat-card"><div class="stat-icon">📊</div><div class="stat-title">Completion Rate</div><div class="stat-number" id="statPercent">0%</div></div>
+    </div>
+
+    <!-- PROGRESS -->
+    <div class="progress-card">
+        <div class="progress-header"><span>📊 Overall Progress</span><span id="progressPercentText">0%</span></div>
+        <div class="progress-bar-container"><div class="progress-fill" id="progressFill"></div></div>
+    </div>
+
+    <!-- FORM CREATE TASK -->
+    <div class="form-card">
+        <div class="card-header"><i>➕</i><h2>Create New Task</h2></div>
+        <div class="form-grid">
+            <div class="input-group"><label>Project Name *</label><input type="text" id="taskName" placeholder="e.g., zkSync Era"></div>
+            <div class="input-group"><label>Category</label><select id="taskCategory"><option value="DeFi">📊 DeFi</option><option value="NFT">🎨 NFT</option><option value="L1">⛓️ Layer 1</option><option value="L2">⚡ Layer 2</option><option value="GameFi">🎮 GameFi</option><option value="Social">💬 SocialFi</option></select></div>
+            <div class="input-group"><label>Priority</label><select id="taskPriority"><option value="High">🔥 High Priority</option><option value="Mid">⚡ Mid Priority</option><option value="Low">💤 Low Priority</option></select></div>
+            <div class="input-group"><label>Deadline</label><input type="date" id="taskDate"></div>
+            <div class="input-group"><label>Website URL</label><input type="url" id="taskWebsite" placeholder="https://..."></div>
+            <div class="input-group"><label>Notes</label><textarea id="taskDesc" rows="1" placeholder="Add notes..."></textarea></div>
+        </div>
+        <button class="btn-primary" id="createBtn">✨ Create Task</button>
+    </div>
+
+    <!-- FILTER & SEARCH -->
+    <div class="filter-bar">
+        <div class="filter-group">
+            <button class="filter-chip active" data-filter="all">All</button>
+            <button class="filter-chip" data-filter="DeFi">DeFi</button>
+            <button class="filter-chip" data-filter="NFT">NFT</button>
+            <button class="filter-chip" data-filter="L1">L1</button>
+            <button class="filter-chip" data-filter="L2">L2</button>
+            <button class="filter-chip" data-filter="GameFi">GameFi</button>
+            <button class="filter-chip" data-filter="Social">Social</button>
+        </div>
+        <div style="display: flex; gap: 10px;">
+            <input type="text" class="search-box" id="searchInput" placeholder="🔍 Search tasks...">
+            <button class="filter-chip" id="csvBtn">📊 CSV</button>
+            <button class="filter-chip" id="jsonExportBtn">📤 JSON</button>
+            <button class="filter-chip" id="jsonImportBtn">📥 Import</button>
+        </div>
+    </div>
+
+    <!-- TABLE TASK -->
+    <div class="table-container">
+        <table id="taskTable">
+            <thead><tr><th>Project</th><th>Category</th><th>Priority</th><th>Deadline</th><th>Website</th><th>Status</th><th>Actions</th></tr</thead>
+            <tbody id="taskList"></tbody>
+        </table>
+    </div>
+
+    <!-- DONATION SECTION -->
+    <div class="donation-section">
+        <div class="donation-title">💖 Support This Project</div>
+        <div style="text-align: center; margin-bottom: 20px;">
+            <a href="https://sociabuzz.com/xenonsixtytwo/tribe" target="_blank" class="sociabuzz-btn">🎁 Donate via Sociabuzz</a>
+        </div>
+        <div class="donation-grid">
+            <div class="donation-item"><i>₿</i><h4>Bitcoin</h4><p id="btcAddr">bc1pcuy0x7ynf65y50flud3axn0nr267zx4mrfw6879eavkx5yct7slqxgcg3g</p><button class="copyBtn" data-addr="btcAddr">📋 Copy Address</button></div>
+            <div class="donation-item"><i>🟡</i><h4>EVM (ETH/USDT/BNB)</h4><p id="evmAddr">0xf1D8356475095c0c709AF9f76e9a1AC5E9ff5D5d</p><button class="copyBtn" data-addr="evmAddr">📋 Copy Address</button></div>
+            <div class="donation-item"><i>◎</i><h4>Solana</h4><p id="solAddr">7H9HdUuxCKkmzUmSedfCueYvZzXZYzhQBng9u6jA4813</p><button class="copyBtn" data-addr="solAddr">📋 Copy Address</button></div>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL EDIT -->
+<div id="editModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header"><h3>✏️ Edit Task</h3><button class="close-modal" onclick="closeModal()">×</button></div>
+        <div class="form-group"><label>Project Name</label><input type="text" id="editName"></div>
+        <div class="form-group"><label>Category</label><select id="editCategory"><option value="DeFi">DeFi</option><option value="NFT">NFT</option><option value="L1">L1</option><option value="L2">L2</option><option value="GameFi">GameFi</option><option value="Social">Social</option></select></div>
+        <div class="form-group"><label>Priority</label><select id="editPriority"><option value="High">High</option><option value="Mid">Mid</option><option value="Low">Low</option></select></div>
+        <div class="form-group"><label>Deadline</label><input type="date" id="editDeadline"></div>
+        <div class="form-group"><label>Website URL</label><input type="url" id="editWebsite" placeholder="https://"></div>
+        <div class="form-group"><label>Notes</label><textarea id="editDesc" rows="2"></textarea></div>
+        <div class="modal-buttons"><button class="btn-primary" id="saveEditBtn">Save Changes</button><button class="btn-primary" style="background:#6b7280" onclick="closeModal()">Cancel</button></div>
+    </div>
+</div>
+
+<div id="toast" class="toast"></div>
+
+<script>
+    // Data
+    let tasks = [];
+    let currentFilter = 'all';
+    let currentSearch = '';
+    let editingId = null;
+
+    // Toast
+    function showToast(msg, isError = false) {
+        const toast = document.getElementById('toast');
+        toast.innerHTML = msg;
+        toast.style.background = isError ? '#ef4444' : '#10b981';
+        toast.style.display = 'block';
+        setTimeout(() => { toast.style.display = 'none'; }, 2500);
+    }
+
+    // Save to localStorage
+    function saveTasks() {
+        localStorage.setItem('xenon_ultimate_data', JSON.stringify(tasks));
+    }
+
+    // Load from localStorage
+    function loadTasks() {
+        const saved = localStorage.getItem('xenon_ultimate_data');
+        if (saved) {
+            tasks = JSON.parse(saved);
+        } else {
+            // Default tasks
+            tasks = [
+                { id: 1, name: "zkSync Era", category: "L2", priority: "High", desc: "Bridge, swap, deploy contract", deadline: "2026-05-15", website: "https://zksync.io", status: "Pending" },
+                { id: 2, name: "LayerZero", category: "L2", priority: "High", desc: "Cross-chain messaging", deadline: "2026-05-20", website: "https://layerzero.network", status: "Pending" },
+                { id: 3, name: "Scroll", category: "L2", priority: "Mid", desc: "Testnet dApps", deadline: "2026-05-10", website: "https://scroll.io", status: "Done" }
+            ];
+            saveTasks();
+        }
+        renderAll();
+    }
+
+    // Render semua
+ 
