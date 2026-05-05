@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>XENON AIRDROP ULTIMATE - Advanced Task Tracker</title>
+    <!-- Chart.js untuk grafik -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <!-- Flatpickr untuk kalender -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <!-- Font Awesome 6 (gratis) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, 'Segoe UI', 'Inter', sans-serif;
+        }
+
+        /* Dark Mode Default */
+        :root {
+            --bg-primary: #0f172a;
+            --bg-secondary: #1e293b;
+            --bg-card: rgba(30, 41, 59, 0.9);
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --border: #334155;
+            --input-bg: #1e293b;
+            --high: #ef4444;
+            --mid: #facc15;
+            --low: #22c55e;
+            --category-defi: #3b82f6;
+            --category-nft: #ec4899;
+            --category-l1: #8b5cf6;
+            --category-l2: #06b6d4;
+            --category-gamefi: #f97316;
+            --category-socialfi: #14b8a6;
+        }
+
+        body.light {
+            --bg-primary: #f8fafc;
+            --bg-secondary: #e2e8f0;
+            --bg-card: rgba(255, 255, 255, 0.95);
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --border: #cbd5e1;
+            --input-bg: #ffffff;
+        }
+
+        body {
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            transition: all 0.3s;
+            padding: 1rem;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            padding: 1rem 0;
+        }
+
+        .logo h1 {
+            font-size: 1.8rem;
+            background: linear-gradient(135deg, #c084fc, #60a5fa);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .logo p {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .theme-toggle {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            cursor: pointer;
+            color: var(--text-primary);
+        }
+
+        /* Grid Layout */
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .card {
+            background: var(--bg-card);
+            backdrop-filter: blur(4px);
+            border-radius: 1.5rem;
+            padding: 1.25rem;
+            border: 1px solid var(--border);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .card h3 {
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        /* Statistik */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 0.75rem;
+            background: var(--bg-secondary);
+            border-radius: 1rem;
+        }
+
+        .stat-number {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #facc15;
+        }
+
+        canvas {
+            max-height: 250px;
+            width: 100% !important;
+        }
+
+        /* Form Tambah Task */
+        .form-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        input, select, textarea {
+            background: var(--input-bg);
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+            padding: 0.6rem 0.8rem;
+            border-radius: 0.8rem;
+            font-size: 0.85rem;
+            flex: 1;
+            min-width: 120px;
+        }
+
+        .btn {
+            padding: 0.6rem 1.2rem;
+            border-radius: 2rem;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            transition: 0.2s;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+        }
+
+        .btn-primary {
+            background: #3b82f6;
+            color: white;
+        }
+
+        .btn-danger {
+            background: #ef4444;
+            color: white;
+        }
+
+        .btn-success {
+            background: #22c55e;
+            color: white;
+        }
+
+        /* Filter & Search */
+        .filter-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+            align-items: center;
+        }
+
+        .search-box {
+            flex: 2;
+            min-width: 200px;
+        }
+
+        .filter-btn {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border);
+            padding: 0.4rem 1rem;
+            border-radius: 2rem;
+            cursor: pointer;
+        }
+
+        .filter-btn.active {
+            background: #3b82f6;
+            color: white;
+        }
+
+        /* Tabel Task */
+        .task-table {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        th {
+            color: var(--text-secondary);
+            font-weight: 600;
+            font-size: 0.8rem;
+        }
+
+        .priority-high { color: var(--high); font-weight: bold; }
+        .priority-mid { color: var(--mid); }
+        .priority-low { color: var(--low); }
+
+        .category-badge {
+            padding: 0.2rem 0.6rem;
+            border-radius: 2rem;
+            font-size: 0.7rem;
+            font-weight: bold;
+            display: inline-block;
+        }
+
+        .category-Defi { background: var(--category-defi); color: white; }
+        .category-NFT { background: var(--category-nft); color: white; }
+        .category-L1 { background: var(--category-l1); color: white; }
+        .category-L2 { background: var(--category-l2); color: white; }
+        .category-GameFi { background: var(--category-gamefi); color: white; }
+        .category-SocialFi { background: var(--category-socialfi); color: white; }
+
+        .task-check {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            accent-color: #22c55e;
+        }
+
+        .action-icons i {
+            cursor: pointer;
+            margin: 0 0.3rem;
+            font-size: 1.1rem;
+            transition: 0.2s;
+        }
+
+        .action-icons i:hover { opacity: 0.7; }
+
+        .deadline {
+            font-size: 0.7rem;
+            font-family: monospace;
+        }
+
+        @media (max-width: 768px) {
+            .form-group { flex-direction: column; }
+            th, td { font-size: 0.75rem; padding: 0.5rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <div class="logo">
+            <h1>⟠ XENON AIRDROP ULTIMATE</h1>
+            <p>The Most Advanced Airdrop Task Tracker</p>
+        </div>
+        <button class="theme-toggle" id="themeToggle"><i class="fas fa-moon"></i> Dark Mode</button>
+    </div>
+
+    <div class="dashboard">
+        <!-- Statistik & Grafik -->
+        <div class="card">
+            <h3><i class="fas fa-chart-simple"></i> Statistik Cepat</h3>
+            <div class="stats-grid" id="statsGrid">
+                <div class="stat-item"><div class="stat-number" id="totalTasks">0</div><div>Total Tugas</div></div>
+                <div class="stat-item"><div class="stat-number" id="completedTasks">0</div><div>Selesai</div></div>
+                <div class="stat-item"><div class="stat-number" id="pendingTasks">0</div><div>Belum</div></div>
+            </div>
+            <canvas id="categoryChart" width="400" height="200"></canvas>
+        </div>
+
+        <!-- Kalender & Ekspor -->
+        <div class="card">
+            <h3><i class="fas fa-calendar-alt"></i> Kalender Deadline</h3>
+            <div id="calendar" style="margin-bottom: 1rem;"></div>
+            <div style="display: flex; gap: 0.5rem; flex-wrap: wrap; margin-top: 1rem;">
+                <button class="btn" id="exportCSV"><i class="fas fa-file-csv"></i> Ekspor CSV</button>
+                <button class="btn" id="exportJSON"><i class="fas fa-file-code"></i> Ekspor JSON</button>
+                <input type="file" id="importInput" accept=".json,.csv" style="display: none;">
+                <button class="btn" id="importBtn"><i class="fas fa-upload"></i> Impor</button>
+                <button class="btn btn-danger" id="resetAllBtn"><i class="fas fa-trash"></i> Reset Semua</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Form Tambah Tugas -->
+    <div class="card" style="margin-bottom: 1.5rem;">
+        <h3><i class="fas fa-plus-circle"></i> Tambah Tugas Airdrop</h3>
+        <div class="form-group">
+            <input type="text" id="taskName" placeholder="Nama tugas (contoh: Follow Twitter)">
+            <select id="taskCategory">
+                <option value="Defi">DeFi</option>
+                <option value="NFT">NFT</option>
+                <option value="L1">L1</option>
+                <option value="L2">L2</option>
+                <option value="GameFi">GameFi</option>
+                <option value="SocialFi">SocialFi</option>
+            </select>
+            <select id="taskPriority">
+                <option value="High">High 🔴</option>
+                <option value="Mid">Mid 🟡</option>
+                <option value="Low">Low 🟢</option>
+            </select>
+            <input type="text" id="taskLink" placeholder="Link website / sosial media">
+            <input type="text" id="taskDeadline" placeholder="Deadline (YYYY-MM-DD)">
+        </div>
+        <div class="form-group">
+            <textarea id="taskDesc" rows="2" placeholder="Deskripsi tugas (opsional)"></textarea>
+            <button class="btn btn-primary" id="addTaskBtn"><i class="fas fa-save"></i> Simpan Tugas</button>
+        </div>
+    </div>
+
+    <!-- Filter & Search -->
+    <div class="filter-bar">
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="🔍 Cari tugas... (nama/kategori)" style="width: 100%;">
+        </div>
+        <button class="filter-btn active" data-filter="all">Semua</button>
+        <button class="filter-btn" data-filter="pending">Belum</button>
+        <button class="filter-btn" data-filter="done">Selesai</button>
+        <select id="categoryFilter">
+            <option value="all">Semua Kategori</option>
+            <option value="Defi">DeFi</option>
+            <option value="NFT">NFT</option>
+            <option value="L1">L1</option>
+            <option value="L2">L2</option>
+            <option value="GameFi">GameFi</option>
+            <option value="SocialFi">SocialFi</option>
+        </select>
+        <select id="priorityFilter">
+            <option value="all">Semua Prioritas</option>
+            <option value="High">High</option>
+            <option value="Mid">Mid</option>
+            <option value="Low">Low</option>
+        </select>
+    </div>
+
+    <!-- Daftar Tugas -->
+    <div class="card">
+        <h3><i class="fas fa-list-check"></i> Daftar Tugas Airdrop</h3>
+        <div class="task-table">
+            <table id="taskTable">
+                <thead>
+                    <tr><th style="width:30px"></th><th>Nama Tugas</th><th>Kategori</th><th>Prioritas</th><th>Link</th><th>Deadline</th><th style="width:80px">Aksi</th></tr>
+                </thead>
+                <tbody id="taskListBody"></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Data Tasks
+    let tasks = [];
+    let nextId = 1;
+    let chartInstance = null;
+    let currentFilterStatus = "all";
+
+    // Load dari localStorage
+    function loadData() {
+        const saved = localStorage.getItem("xenon_ultimate_tasks");
+        if (saved) {
+            tasks = JSON.parse(saved);
+            if (tasks.length > 0) nextId = Math.max(...tasks.map(t => t.id)) + 1;
+        } else {
+            // data contoh
+            tasks = [
+                { id: 1, name: "Follow Twitter Xenon", category: "SocialFi", priority: "High", link: "https://twitter.com/xenonprotocol", deadline: "2025-06-15", desc: "Follow dan retweet", completed: false },
+                { id: 2, name: "Mint NFT Testnet", category: "NFT", priority: "Mid", link: "https://testnet.xenon.xyz/mint", deadline: "2025-05-30", desc: "Claim testnet badge", completed: false },
+                { id: 3, name: "Bridge ke L2", category: "L2", priority: "High", link: "https://bridge.arbitrum.io", deadline: "2025-06-10", desc: "Bridge minimal 0.01 ETH", completed: false },
+                { id: 4, name: "Join Discord", category: "SocialFi", priority: "Low", link: "https://discord.gg/xenon", deadline: "", desc: "Verifikasi role", completed: false }
+            ];
+            nextId = 5;
+        }
+        renderAll();
+        saveData();
+    }
+
+    function saveData() {
+        localStorage.setItem("xenon_ultimate_tasks", JSON.stringify(tasks));
+    }
+
+    function addTask() {
+        const name = document.getElementById("taskName").value.trim();
+        if (!name) return alert("Nama tugas wajib diisi!");
+        const newTask = {
+            id: nextId++,
+            name: name,
+            category: document.getElementById("taskCategory").value,
+            priority: document.getElementById("taskPriority").value,
+            link: document.getElementById("taskLink").value.trim(),
+            deadline: document.getElementById("taskDeadline").value,
+            desc: document.getElementById("taskDesc").value,
+            completed: false
+        };
+        tasks.push(newTask);
+        // clear form
+        document.getElementById("taskName").value = "";
+        document.getElementById("taskLink").value = "";
+        document.getElementById("taskDeadline").value = "";
+        document.getElementById("taskDesc").value = "";
+        renderAll();
+        saveData();
+    }
+
+    function deleteTask(id) {
+        if (confirm("Hapus tugas ini?")) {
+            tasks = tasks.filter(t => t.id !== id);
+            renderAll();
+            saveData();
+        }
+    }
+
+    function toggleComplete(id) {
+        const task = tasks.find(t => t.id === id);
+        if (task) {
+            task.completed = !task.completed;
+            renderAll();
+            saveData();
+        }
+    }
+
+    function editTask(id) {
+        const task = tasks.find(t => t.id === id);
+        if (!task) return;
+        const newName = prompt("Edit nama tugas:", task.name);
+        if (newName && newName.trim()) task.name = newName.trim();
+        const newLink = prompt("Edit link:", task.link);
+        if (newLink !== null) task.link = newLink;
+        const newDeadline = prompt("Edit deadline (YYYY-MM-DD):", task.deadline);
+        if (newDeadline !== null) task.deadline = newDeadline;
+        renderAll();
+        saveData();
+    }
+
+    // Render Tabel + Filter + Grafik + Kalender
+    function renderAll() {
+        renderTaskTable();
+        updateStatsAndChart();
+        renderCalendar();
+    }
+
+    function renderTaskTable() {
+        const searchTerm = document.getElementById("searchInput").value.toLowerCase();
+        const categoryFilter = document.getElementById("categoryFilter").value;
+        const priorityFilter = document.getElementById("priorityFilter").value;
+        
+        let filtered = tasks.filter(task => {
+            if (currentFilterStatus === "pending" && task.completed) return false;
+            if (currentFilterStatus === "done" && !task.completed) return false;
+            if (categoryFilter !== "all" && task.category !== categoryFilter) return false;
+            if (priorityFilter !== "all" && task.priority !== priorityFilter) return false;
+            if (searchTerm && !task.name.toLowerCase().includes(searchTerm) && !task.category.toLowerCase().includes(searchTerm)) return false;
+            return true;
+        });
+
+        const tbody = document.getElementById("taskListBody");
+        if (!tbody) return;
+        tbody.innerHTML = "";
+        filtered.forEach(task => {
+            const row = tbody.insertRow();
+            row.innerHTML = `
+                <td><input type="checkbox" class="task-check" data-id="${task.id}" ${task.completed ? "checked" : ""}></td>
+                <td><strong>${escapeHtml(task.name)}</strong><br><small>${escapeHtml(task.desc.substring(0,50))}</small></td>
+                <td><span class="category-badge category-${task.category}">${task.category}</span></td>
+                <td class="priority-${task.priority.toLowerCase()}">${task.priority === "High" ? "🔴 High" : task.priority === "Mid" ? "🟡 Mid" : "🟢 Low"}</td>
+                <td>${task.link ? `<a href="${task.link}" target="_blank" style="color:#60a5fa;">Link</a>` : "-"}</td>
+                <td class="deadline">${task.deadline || "-"}</td>
+                <td class="action-icons">
+                    <i class="fas fa-edit" data-id="${task.id}" data-action="edit"></i>
+                    <i class="fas fa-trash" data-id="${task.id}" data-action="delete"></i>
+                </td>
+            `;
+        });
+
+        // event listeners checkbox & icons
+        document.querySelectorAll(".task-check").forEach(cb => {
+            cb.addEventListener("change", (e) => toggleComplete(parseInt(e.target.dataset.id)));
+        });
+        document.querySelectorAll("[data-action='edit']").forEach(btn => {
+            btn.addEventListener("click", (e) => editTask(parseInt(btn.dataset.id)));
+        });
+        document.querySelectorAll("[data-action='delete']").forEach(btn => {
+            btn.addEventListener("click", (e) => deleteTask(parseInt(btn.dataset.id)));
+        });
+    }
+
+    function updateStatsAndChart() {
+        const total = tasks.length;
+        const completed = tasks.filter(t => t.completed).length;
+        document.getElementById("totalTasks").innerText = total;
+        document.getElementById("completedTasks").innerText = completed;
+        document.getElementById("pendingTasks").innerText = total - completed;
+
+        // chart per kategori
+        const categories = ["Defi", "NFT", "L1", "L2", "GameFi", "SocialFi"];
+        const counts = categories.map(cat => tasks.filter(t => t.category === cat).length);
+        
+        const ctx = document.getElementById("categoryChart").getContext("2d");
+        if (chartInstance) chartInstance.destroy();
+        chartInstance = new Chart(ctx, {
+            type: 'bar',
+            data: { labels: categories, datasets: [{ label: 'Jumlah Tugas', data: counts, backgroundColor: ['#3b82f6','#ec4899','#8b5cf6','#06b6d4','#f97316','#14b8a6'] }] },
+            options: { responsive: true, maintainAspectRatio: true, plugins: { legend: { position: 'bottom' } } }
+        });
+    }
+
+    function renderCalendar() {
+        const eventDates = tasks.filter(t => t.deadline).map(t => t.deadline);
+        flatpickr("#calendar", {
+            inline: true,
+            dateFormat: "Y-m-d",
+            onDayCreate: function(dObj, dStr, fp, dayElem) {
+                const date = dayElem.dateObj;
+                const yyyy = date.getFullYear();
+                const mm = String(date.getMonth() + 1).padStart(2,'0');
+                const dd = String(date.getDate()).padStart(2,'0');
+                const dateStr = `${yyyy}-${mm}-${dd}`;
+                if (eventDates.includes(dateStr)) {
+                    dayElem.style.backgroundColor = "#facc15";
+                    dayElem.style.borderRadius = "50%";
+                    dayElem.style.color = "#0f172a";
+                }
+            }
+        });
+    }
+
+    function exportCSV() {
+        let csv = "ID,Nama,Kategori,Prioritas,Link,Deadline,Deskripsi,Selesai\n";
+        tasks.forEach(t => {
+            csv += `${t.id},"${t.name}","${t.category}","${t.priority}","${t.link}","${t.deadline}","${t.desc}",${t.completed}\n`;
+        });
+        const blob = new Blob([csv], {type: "text/csv"});
+        const a = document.createElement("a");
+        a.href = URL.createObjectURL(blob);
+        a.download = `xenon_tasks_${new Date().toISOString().slice(0,19)}.csv`;
+        a.click();
+    }
+
+    function exportJSON() {
+        const data = JSON.stringify(tasks, null, 2);
+        const blob = new Blob([data], {type: "application/json"});
+        const a = document.createElement("a");
+        a.href = URL.createObjectURL(blob);
+        a.download = `xenon_tasks_${new Date().toISOString().slice(0,19)}.json`;
+        a.click();
+    }
+
+    function importData(file) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            try {
+                const imported = JSON.parse(e.target.result);
+                if (Array.isArray(imported)) {
+                    tasks = imported;
+                    nextId = tasks.length > 0 ? Math.max(...tasks.map(t=>t.id)) + 1 : 1;
+                    renderAll();
+                    saveData();
+                    alert("Impor berhasil!");
+                } else alert("Format JSON tidak sesuai");
+            } catch(err) { alert("File tidak valid"); }
+        };
+        reader.readAsText(file);
+    }
+
+    function resetAll() {
+        if(confirm("Reset semua tugas? Data akan hilang permanen!")) {
+            tasks = [];
+            nextId = 1;
+            renderAll();
+            saveData();
+        }
+    }
+
+    function escapeHtml(str) { return String(str).replace(/[&<>]/g, function(m){return {'&':'&amp;','<':'&lt;','>':'&gt;'}[m];}); }
+
+    // Init Event Listeners
+    document.getElementById("addTaskBtn").addEventListener("click", addTask);
+    document.getElementById("exportCSV").addEventListener("click", exportCSV);
+    document.getElementById("exportJSON").addEventListener("click", exportJSON);
+    document.getElementById("importBtn").addEventListener("click", () => document.getElementById("importInput").click());
+    document.getElementById("importInput").addEventListener("change", (e) => { if(e.target.files[0]) importData(e.target.files[0]); e.target.value = ""; });
+    document.getElementById("resetAllBtn").addEventListener("click", resetAll);
+    document.getElementById("searchInput").addEventListener("input", () => renderAll());
+    document.getElementById("categoryFilter").addEventListener("change", () => renderAll());
+    document.getElementById("priorityFilter").addEventListener("change", () => renderAll());
+    document.querySelectorAll(".filter-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+            document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+            btn.classList.add("active");
+            currentFilterStatus = btn.dataset.filter;
+            renderAll();
+        });
+    });
+
+    // Theme Toggle
+    document.getElementById("themeToggle").addEventListener("click", () => {
+        document.body.classList.toggle("light");
+        document.getElementById("themeToggle").innerHTML = document.body.classList.contains("light") ? '<i class="fas fa-sun"></i> Light Mode' : '<i class="fas fa-moon"></i> Dark Mode';
+    });
+
+    loadData();
+</script>
+</body>
+</html>
