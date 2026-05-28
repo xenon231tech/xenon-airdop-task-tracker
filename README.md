@@ -4,8 +4,8 @@
 
 ### *The Most Advanced Airdrop Task Tracker*
 
-[![GitHub Pages](https://img.shields.io/badge/🌐_GitHub_Pages-FFD700?style=for-the-badge&logo=githubpages&logoColor=black)](https://xenon231tech.github.io/xenon-airdop-task-tracker/)
-[![Vercel](https://img.shields.io/badge/⚡_Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://xenon-airdop-task-tracker.vercel.app)
+[![GitHub Pages](https://img.shields.io/badge/🌐_GitHub_Pages-FFD700?style=for-the-badge&logo=githubpages&logoColor=black)](https://xenon231tech.github.io/xenon-airdrop-task-tracker/)
+[![Vercel](https://img.shields.io/badge/⚡_Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://xenon-airdrop-task-tracker.vercel.app)
 [![GitHub Stars](https://img.shields.io/github/stars/xenon231tech/xenon-airdrop-task-tracker?style=for-the-badge&logo=github&color=gold)](https://github.com/xenon231tech/xenon-airdrop-task-tracker/stargazers)
 [![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge&logo=opensourceinitiative)](LICENSE)
 
@@ -18,7 +18,7 @@
 ## 📸 Live Preview
 
 > **Website bisa diakses langsung di:**  
-> 🔗 https://xenon231tech.github.io/xenon-airdop-task-tracker/
+> 🔗 https://xenon231tech.github.io/xenon-airdrop-task-tracker/
 
 ---
 
@@ -26,10 +26,10 @@
 
 | Platform | Link | Status |
 |----------|------|--------|
-| 🌐 **GitHub Pages** | [xenon231tech.github.io/xenon-airdop-task-tracker](https://xenon231tech.github.io/xenon-airdop-task-tracker) | ✅ Live |
-| ⚡ **Vercel** | [xenon-airdop-task-tracker.vercel.app](https://xenon-airdop-task-tracker.vercel.app) | ✅ Live |
+| 🌐 **GitHub Pages** | [xenon231tech.github.io/xenon-airdrop-task-tracker](https://xenon231tech.github.io/xenon-airdrop-task-tracker) | ✅ Live |
+| ⚡ **Vercel** | [xenon-airdrop-task-tracker.vercel.app](https://xenon-airdrop-task-tracker.vercel.app) | ✅ Live |
 
-[![Buka Aplikasi](https://img.shields.io/badge/🚀_BUKA_APLIKASI-FFD700?style=for-the-badge)](https://xenon231tech.github.io/xenon-airdop-task-tracker/)
+[![Buka Aplikasi](https://img.shields.io/badge/🚀_BUKA_APLIKASI-FFD700?style=for-the-badge)](https://xenon231tech.github.io/xenon-airdrop-task-tracker/)
 
 ---
 
