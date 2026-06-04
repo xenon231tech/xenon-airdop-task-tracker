@@ -1,11 +1,32 @@
-## Deskripsi
-Jelaskan perubahan yang Anda buat.
+## Description
+Please describe the changes you've made.
 
-## Jenis Perubahan
+## Type of Change
 - [ ] Bug fix
-- [ ] Fitur baru
-- [ ] Dokumentasi
+- [ ] New feature
+- [ ] Documentation
+- [ ] Performance improvement
+- [ ] Code refactoring
+
+## Related Issues
+Closes #(issue number)
+
+## Testing
+Please describe the tests you've performed:
+- [ ] Unit tests
+- [ ] Integration tests
+- [ ] Manual testing
 
 ## Checklist
-- [ ] Saya sudah testing
-- [ ] Kode sudah rapi
+- [ ] My code follows the code style guidelines
+- [ ] I have performed a self-review of my own code
+- [ ] I have commented my code, particularly in hard-to-understand areas
+- [ ] I have made corresponding changes to the documentation
+- [ ] My changes generate no new warnings
+- [ ] I have tested my changes thoroughly
+
+## Screenshots (if applicable)
+Add screenshots or GIFs demonstrating the changes.
+
+## Additional Context
+Add any other context about the PR here.
