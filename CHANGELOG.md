@@ -1,33 +1,62 @@
-# 📋 Changelog
+# Changelog
 
-Semua perubahan penting pada proyek ini akan dicatat di sini.
+All notable changes to XENON AIRDROP ULTIMATE will be documented in this file.
 
-## [1.0.0] - 2026-04-28
+## [2.0.0] - 2024-06-04
 
-### ✨ Added (Fitur Baru)
-- Fitur tambah tugas airdrop
-- Kategori: DeFi, NFT, L1, L2, GameFi, SocialFi
-- Prioritas: High, Mid, Low
-- Fitur pencarian dan filter
-- Dark/Light mode toggle
-- Export/Import data JSON
-- Deadline reminder
-- Progress bar
-- Chart statistik per kategori
-- Calendar view
-- Notifikasi browser
+### ✨ Added
+- **Search & Filter System** - Real-time search by name/description
+- **Advanced Filtering** - Filter by category, status, and priority
+- **Smart Sorting** - Sort by newest, oldest, priority, or deadline
+- **Keyboard Shortcuts** - Ctrl+N for new task, Esc to clear search
+- **Toast Notifications** - Success and info notifications with neon styling
+- **Task Counter** - Real-time count of filtered tasks
+- **Staggered Animations** - Smooth task appearance animations
+- **Enhanced Chart Legend** - Better positioned and styled chart legends
+- **Neon Design Upgrade** - Vibrant cyan, pink, and purple color scheme
+- **Improved Notifications** - Bright lime green and cyan text colors
 
-### 🐛 Fixed (Perbaikan)
-- Perbaikan bug penyimpanan localStorage
-- Perbaikan tampilan di HP (responsive)
+### 🎨 Improved
+- Chart container height increased for better visibility
+- Legend positioning moved to bottom for clarity
+- Notification styling with glowing effects
+- Mobile responsiveness for all screen sizes
+- Overall UI/UX with neon aesthetic
 
-### 🔧 Changed (Perubahan)
-- Update tampilan UI lebih modern dengan glassmorphism
-- Optimasi performa loading
+### 🔧 Fixed
+- Chart legend overlapping issues
+- Text visibility in notifications
+- Responsive layout on mobile devices
 
-## [0.5.0] - 2026-04-25
+---
 
-### Added
-- Versi awal prototype
-- Fitur dasar CRUD tugas
-- Penyimpanan lokal (localStorage)
+## [1.0.0] - 2024-05-28
+
+### ✨ Initial Release
+- **Task Management** - Add, edit, delete tasks with full CRUD operations
+- **6 Categories** - DeFi, NFT, L1, L2, GameFi, SocialFi
+- **Priority System** - High, Medium, Low priority levels
+- **Project Links** - Store and quick-access project URLs
+- **Deadline Tracking** - Date picker with deadline management
+- **Dark/Light Mode** - Theme toggle for comfortable viewing
+- **Analytics Dashboard** - Interactive charts and statistics
+- **Data Persistence** - Auto-save with localStorage
+- **Export Feature** - Download tasks as JSON
+- **Responsive Design** - Works on all devices
+
+---
+
+## Upcoming Features
+
+- [ ] Backend API integration
+- [ ] User authentication
+- [ ] Cloud sync
+- [ ] Mobile app
+- [ ] Telegram bot
+- [ ] Discord notifications
+- [ ] Team collaboration
+- [ ] Advanced analytics
+
+---
+
+**For detailed commits, see [GitHub Commits](https://github.com/xenon231tech/xenon-airdop-task-tracker/commits)**
