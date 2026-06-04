@@ -60,6 +60,33 @@ Experience the power of advanced airdrop task management with our vibrant, neon-
 
 ---
 
+## 💖 Support This Project
+
+### 🎁 Help Us Continue Development
+
+If you find XENON AIRDROP ULTIMATE useful, consider supporting us:
+
+#### 💎 Cryptocurrency Donations
+
+| Network | Address |
+|---------|----------|
+| **Bitcoin** | `bc1pcuy0x7ynf65y50flud3axn0nr267zx4mrfw6879eavkx5yct7slqxgcg3g` |
+| **EVM (ETH/USDT/BNB)** | `0xf1D8356475095c0c709AF9f76e9a1AC5E9ff5D5d` |
+| **Solana (SOL)** | `7H9HdUuxCKkmzUmSedfCueYvZzXZYzhQBng9u6jA4813` |
+| **NEAR Protocol** | `a1c10dea4f56c28105269615c9ad9b83f543d045bfc9b77a9b37a368486aef58` |
+| **SUI** | `0x1b1aa719f8d5dcb59a4586b23a1fdf6861c67572c6def32eaf423ccf84c385ec` |
+| **Zcash (ZEC)** | `t1XmaBxo3XFBQAShHM3HGndFZkGiEPo4aP2` |
+| **Stellar (XLM)** | `GARCQ2M7ZSR53YCS4YEQGWHCW3OKTLPAMNJPQHVYZHC37LVH3WLY2CN5` |
+| **Aptos (APT)** | `0x374a09b74b786f45c1e823e8ffaa77e401994c4a7295687dc0aba658acb5dea9` |
+
+#### 🌟 Other Ways to Support
+- ⭐ Star this repository on GitHub
+- 🐛 Report bugs and suggest features
+- 📢 Share with your friends
+- 🤝 Contribute code improvements
+
+---
+
 ## 🛠️ Tech Stack
 
 | Technology | Purpose |
@@ -192,14 +219,16 @@ This project is licensed under the **MIT License** - see [LICENSE](LICENSE) file
 
 ## 📈 Roadmap
 
-- [ ] Backend API integration
-- [ ] User authentication
-- [ ] Cloud sync across devices
-- [ ] Mobile app (iOS/Android)
-- [ ] Telegram bot integration
-- [ ] Discord notifications
-- [ ] Advanced analytics dashboard
-- [ ] Team collaboration features
+| Feature | Status | Timeline |
+|---------|--------|----------|
+| Backend API Integration | 🔄 Planned | Q3 2024 |
+| User Authentication | 🔄 Planned | Q3 2024 |
+| Cloud Sync | 🔄 Planned | Q4 2024 |
+| Mobile App | 📋 Proposed | 2025 |
+| Telegram Bot | 📋 Proposed | Q4 2024 |
+| Discord Notifications | 📋 Proposed | Q4 2024 |
+| Advanced Analytics | 🔄 Planned | Q1 2025 |
+| Team Collaboration | 📋 Proposed | 2025 |
 
 ---
 
