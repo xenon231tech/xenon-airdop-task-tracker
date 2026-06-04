@@ -1,21 +1,61 @@
-MIT License
+GNU AFFERO GENERAL PUBLIC LICENSE
+Version 3, 19 November 2007
 
-Copyright (c) 2026 xenonsixtytwo
+Copyright (C) 2024 Xenon231tech
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU Affero General Public License for more details.
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+You should have received a copy of the GNU Affero General Public License
+along with this program. If not, see <https://www.gnu.org/licenses/>.
+
+ADDITIONAL TERMS:
+
+1. NETWORK USE CLAUSE
+   If you modify this program and make it available over a network,
+   you must make the source code available to all users of the network.
+
+2. COMMERCIAL USE
+   Commercial use of this software requires explicit permission from
+   the copyright holder. Contact: xannrlcs@gmail.com
+
+3. DERIVATIVE WORKS
+   Any derivative works must also be licensed under AGPL-3.0 or later.
+   You must clearly indicate modifications made to the original code.
+
+4. ATTRIBUTION
+   You must retain all copyright notices and provide attribution to
+   the original authors in any derivative works.
+
+5. PATENT RIGHTS
+   If you have patents that would be infringed by this software,
+   you must grant a royalty-free license to use those patents.
+
+6. NO WARRANTY
+   This software is provided "as-is" without any warranty of any kind,
+   express or implied.
+
+7. LIABILITY LIMITATION
+   In no event shall the authors be liable for any damages arising
+   from the use of this software.
+
+---
+
+FULL TEXT OF GNU AFFERO GENERAL PUBLIC LICENSE v3.0
+
+https://www.gnu.org/licenses/agpl-3.0.html
+
+---
+
+For more information about AGPL-3.0, visit:
+https://www.gnu.org/licenses/agpl-3.0-standalone.html
+
+For commercial licensing inquiries, contact:
+Email: xannrlcs@gmail.com

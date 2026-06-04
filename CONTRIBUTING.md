@@ -2,6 +2,8 @@
 
 Thank you for your interest in contributing! We welcome all contributions, from bug reports to feature requests and code improvements.
 
+**Important**: By contributing to this project, you agree that your contributions will be licensed under the AGPL-3.0 license. Any derivative works must also be licensed under AGPL-3.0 or later.
+
 ## 🐛 Reporting Bugs
 
 Found a bug? Please create an issue with:

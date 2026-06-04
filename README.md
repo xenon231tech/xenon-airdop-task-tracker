@@ -6,7 +6,7 @@
 
 [![Vercel](https://img.shields.io/badge/⚡_Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://xenon-airdop-task-tracker.vercel.app)
 [![GitHub](https://img.shields.io/badge/💻_GitHub-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/xenon231tech/xenon-airdop-task-tracker)
-[![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge&logo=opensourceinitiative)](LICENSE)
+[![License](https://img.shields.io/badge/License-AGPL%203.0-red?style=for-the-badge&logo=opensourceinitiative)](LICENSE)
 [![Stars](https://img.shields.io/github/stars/xenon231tech/xenon-airdop-task-tracker?style=for-the-badge&logo=github&color=gold)](https://github.com/xenon231tech/xenon-airdop-task-tracker/stargazers)
 
 > **Track • Manage • Conquer** — Never miss an airdrop task again! 🎯
