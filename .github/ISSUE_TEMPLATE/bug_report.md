@@ -1,21 +1,35 @@
 ---
 name: 🐛 Bug Report
-about: Laporkan error atau masalah
+about: Report a bug or issue
 title: '[BUG] '
 labels: bug
 ---
 
-## Deskripsi
-Jelaskan bugnya dengan jelas.
+## Description
+Please provide a clear and concise description of the bug.
 
-## Langkah Reproduksi
-1. Buka website
-2. Klik ...
-3. Error muncul
+## Steps to Reproduce
+1. Go to...
+2. Click on...
+3. See error...
 
-## Screenshot
-(Tambahkan screenshot jika ada)
+## Expected Behavior
+What should happen instead?
 
-## Device
-- OS: [Windows/Mac/Android]
-- Browser: [Chrome/Safari]
+## Actual Behavior
+What actually happened?
+
+## Screenshots
+If applicable, add screenshots to help explain the problem.
+
+## Environment
+- **OS**: [Windows/macOS/Linux/iOS/Android]
+- **Browser**: [Chrome/Firefox/Safari/Edge]
+- **Browser Version**: [e.g., 120.0]
+- **Device**: [Desktop/Tablet/Mobile]
+
+## Additional Context
+Add any other context about the problem here.
+
+## Possible Solution
+If you have an idea how to fix it, please share!

@@ -1,15 +1,29 @@
 ---
 name: ✨ Feature Request
-about: Saran fitur baru
-title: '[FEAT] '
+about: Suggest a new feature
+title: '[FEATURE] '
 labels: enhancement
 ---
 
-## Fitur yang diinginkan
-Jelaskan fitur yang Anda inginkan.
+## Description
+Please provide a clear and concise description of the feature you want.
 
-## Manfaat
-Apa manfaat fitur ini?
+## Problem It Solves
+What problem does this feature solve? Is it related to an existing issue?
 
-## Alternatif
-Apakah ada solusi lain saat ini?
+## Proposed Solution
+Describe how you envision this feature working.
+
+## Benefits
+What are the benefits of this feature?
+
+## Alternative Solutions
+Have you considered any alternative solutions or workarounds?
+
+## Additional Context
+Add any other context, mockups, or examples here.
+
+## Priority
+- [ ] Low - Nice to have
+- [ ] Medium - Would be useful
+- [ ] High - Important for the project
