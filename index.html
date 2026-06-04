@@ -400,8 +400,15 @@
 
         .chart-container {
             position: relative;
-            height: 300px;
+            height: 400px;
             margin-top: 1.5rem;
+            padding: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .chart-container {
+                height: 300px;
+            }
         }
 
         /* Footer */
@@ -906,8 +913,17 @@
                     maintainAspectRatio: false,
                     plugins: {
                         legend: {
+                            position: 'bottom',
                             labels: {
-                                color: 'var(--text-primary)'
+                                color: 'var(--text-primary)',
+                                font: {
+                                    size: 14,
+                                    weight: 'bold'
+                                },
+                                padding: 15,
+                                boxWidth: 15,
+                                usePointStyle: true,
+                                pointStyle: 'circle'
                             }
                         }
                     },
