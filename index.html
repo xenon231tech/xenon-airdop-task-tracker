@@ -462,7 +462,19 @@
         }
 
         .task-item {
-            animation: slideIn 0.3s ease;
+            animation: slideIn 0.3s ease forwards;
+            opacity: 0;
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
         }
 
         /* Scrollbar */
@@ -544,6 +556,46 @@
             </div>
         </div>
 
+        <!-- Search & Filter Section -->
+        <div class="input-section" style="margin-bottom: 2rem;">
+            <h2 class="section-title"><i class="fas fa-search"></i> Search & Filter</h2>
+            <div class="input-group">
+                <div class="input-field">
+                    <label for="searchInput">Search Tasks</label>
+                    <input type="text" id="searchInput" placeholder="Search by name or description..." onkeyup="filterTasks()">
+                </div>
+                <div class="input-field">
+                    <label for="filterCategory">Filter by Category</label>
+                    <select id="filterCategory" onchange="filterTasks()">
+                        <option value="">All Categories</option>
+                        <option value="defi">DeFi</option>
+                        <option value="nft">NFT</option>
+                        <option value="l1">Layer 1</option>
+                        <option value="l2">Layer 2</option>
+                        <option value="gamefi">GameFi</option>
+                        <option value="socialfi">SocialFi</option>
+                    </select>
+                </div>
+                <div class="input-field">
+                    <label for="filterStatus">Filter by Status</label>
+                    <select id="filterStatus" onchange="filterTasks()">
+                        <option value="">All Status</option>
+                        <option value="completed">Completed</option>
+                        <option value="pending">Pending</option>
+                    </select>
+                </div>
+                <div class="input-field">
+                    <label for="sortBy">Sort By</label>
+                    <select id="sortBy" onchange="filterTasks()">
+                        <option value="newest">Newest First</option>
+                        <option value="oldest">Oldest First</option>
+                        <option value="priority">Priority (High to Low)</option>
+                        <option value="deadline">Deadline (Nearest)</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
         <!-- Add Task Section -->
         <div class="input-section">
             <h2 class="section-title"><i class="fas fa-plus-circle"></i> Add New Task</h2>
@@ -594,7 +646,10 @@
 
         <!-- Tasks List -->
         <div class="tasks-section">
-            <h2 class="section-title"><i class="fas fa-list-check"></i> Your Tasks</h2>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                <h2 class="section-title"><i class="fas fa-list-check"></i> Your Tasks</h2>
+                <span id="taskCount" style="font-size: 0.9rem; color: var(--text-secondary);">0 tasks</span>
+            </div>
             <div id="tasksList"></div>
         </div>
 
@@ -678,20 +733,65 @@
 
             tasks.push(task);
             saveTasks();
-            renderTasks();
+            filterTasks();
             updateStats();
             updateChart();
             clearForm();
+            showNotification('Task added successfully!', 'success');
+        }
+
+        // Filter Tasks
+        function filterTasks() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const categoryFilter = document.getElementById('filterCategory').value;
+            const statusFilter = document.getElementById('filterStatus').value;
+            const sortBy = document.getElementById('sortBy').value;
+
+            let filtered = tasks.filter(task => {
+                const matchSearch = task.name.toLowerCase().includes(searchTerm) || 
+                                   (task.description && task.description.toLowerCase().includes(searchTerm));
+                const matchCategory = !categoryFilter || task.category === categoryFilter;
+                const matchStatus = !statusFilter || 
+                                   (statusFilter === 'completed' && task.completed) ||
+                                   (statusFilter === 'pending' && !task.completed);
+                return matchSearch && matchCategory && matchStatus;
+            });
+
+            // Sort
+            filtered.sort((a, b) => {
+                switch(sortBy) {
+                    case 'oldest':
+                        return new Date(a.createdAt) - new Date(b.createdAt);
+                    case 'priority':
+                        const priorityOrder = { 'high': 0, 'medium': 1, 'low': 2 };
+                        return priorityOrder[a.priority] - priorityOrder[b.priority];
+                    case 'deadline':
+                        if (!a.deadline) return 1;
+                        if (!b.deadline) return -1;
+                        return new Date(a.deadline) - new Date(b.deadline);
+                    default: // newest
+                        return new Date(b.createdAt) - new Date(a.createdAt);
+                }
+            });
+
+            renderTasks(filtered);
+            document.getElementById('taskCount').textContent = filtered.length + ' task' + (filtered.length !== 1 ? 's' : '');
         }
 
         // Render Tasks
-        function renderTasks() {
+        function renderTasks(tasksToRender = tasks) {
             const tasksList = document.getElementById('tasksList');
             tasksList.innerHTML = '';
 
-            tasks.forEach(task => {
+            if (tasksToRender.length === 0) {
+                tasksList.innerHTML = '<p style="text-align: center; color: var(--text-secondary); padding: 2rem;">No tasks found. Create one to get started!</p>';
+                return;
+            }
+
+            tasksToRender.forEach((task, index) => {
                 const taskEl = document.createElement('div');
                 taskEl.className = `task-item ${task.completed ? 'completed' : ''}`;
+                taskEl.style.animationDelay = (index * 50) + 'ms';
                 taskEl.innerHTML = `
                     <div class="task-info">
                         <div class="task-title">${task.name}</div>
@@ -847,6 +947,38 @@
             document.getElementById('taskDeadline').value = '';
             document.getElementById('taskDescription').value = '';
         }
+
+        // Show Notification
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: ${type === 'success' ? 'var(--success)' : 'var(--accent)'};
+                color: #000;
+                padding: 1rem 1.5rem;
+                border-radius: 8px;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+                animation: slideInRight 0.3s ease;
+                z-index: 1000;
+            `;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            setTimeout(() => notification.remove(), 3000);
+        }
+
+        // Keyboard Shortcuts
+        document.addEventListener('keydown', (e) => {
+            if (e.ctrlKey && e.key === 'n') {
+                e.preventDefault();
+                document.getElementById('taskName').focus();
+            }
+            if (e.key === 'Escape') {
+                document.getElementById('searchInput').value = '';
+                filterTasks();
+            }
+        });
 
         // Export Data
         function exportData() {
