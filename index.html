@@ -573,8 +573,8 @@
                     </select>
                 </div>
                 <div class="input-field">
-                    <label for="taskReward">Estimated Reward ($)</label>
-                    <input type="number" id="taskReward" placeholder="0.00" min="0" step="0.01">
+                    <label for="taskLink">Project Link</label>
+                    <input type="url" id="taskLink" placeholder="https://example.com/project">
                 </div>
             </div>
             <div class="input-group">
@@ -655,7 +655,7 @@
             const name = document.getElementById('taskName').value;
             const category = document.getElementById('taskCategory').value;
             const priority = document.getElementById('taskPriority').value;
-            const reward = parseFloat(document.getElementById('taskReward').value) || 0;
+            const link = document.getElementById('taskLink').value;
             const deadline = document.getElementById('taskDeadline').value;
             const description = document.getElementById('taskDescription').value;
 
@@ -669,7 +669,7 @@
                 name,
                 category,
                 priority,
-                reward,
+                link,
                 deadline,
                 description,
                 completed: false,
@@ -704,7 +704,7 @@
                                 ${task.completed ? 'Completed' : 'Pending'}
                             </span>
                             <span><i class="fas fa-tag"></i> ${task.category}</span>
-                            ${task.reward ? `<span><i class="fas fa-coins"></i> $${task.reward.toFixed(2)}</span>` : ''}
+                            ${task.link ? `<span><i class="fas fa-link"></i> <a href="${task.link}" target="_blank" style="color: var(--accent); text-decoration: none;">View Project</a></span>` : ''}
                             ${task.deadline ? `<span><i class="fas fa-calendar"></i> ${new Date(task.deadline).toLocaleDateString()}</span>` : ''}
                         </div>
                         ${task.description ? `<p style="margin-top: 0.5rem; color: var(--text-secondary);">${task.description}</p>` : ''}
@@ -750,13 +750,13 @@
             const total = tasks.length;
             const completed = tasks.filter(t => t.completed).length;
             const pending = total - completed;
-            const totalRewards = tasks.reduce((sum, t) => sum + t.reward, 0);
+            const completionRate = total > 0 ? Math.round((completed / total) * 100) : 0;
 
             document.getElementById('totalTasks').textContent = total;
             document.getElementById('completedTasks').textContent = completed;
             document.getElementById('pendingTasks').textContent = pending;
-            document.getElementById('totalRewards').textContent = `$${totalRewards.toFixed(2)}`;
-            document.getElementById('completionRate').textContent = total > 0 ? Math.round((completed / total) * 100) : 0 + '%';
+            document.getElementById('totalRewards').textContent = total + ' Projects';
+            document.getElementById('completionRate').textContent = completionRate + '%';
         }
 
         // Chart
@@ -843,7 +843,7 @@
             document.getElementById('taskName').value = '';
             document.getElementById('taskCategory').value = '';
             document.getElementById('taskPriority').value = 'medium';
-            document.getElementById('taskReward').value = '';
+            document.getElementById('taskLink').value = '';
             document.getElementById('taskDeadline').value = '';
             document.getElementById('taskDescription').value = '';
         }
