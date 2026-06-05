@@ -9,6 +9,11 @@
 [![License](https://img.shields.io/badge/License-AGPL%203.0-red?style=for-the-badge&logo=opensourceinitiative)](LICENSE)
 [![Stars](https://img.shields.io/github/stars/xenon231tech/xenon-airdop-task-tracker?style=for-the-badge&logo=github&color=gold)](https://github.com/xenon231tech/xenon-airdop-task-tracker/stargazers)
 
+[![Code Quality](https://github.com/xenon231tech/xenon-airdop-task-tracker/actions/workflows/code-quality.yml/badge.svg)](https://github.com/xenon231tech/xenon-airdop-task-tracker/actions)
+[![Build](https://github.com/xenon231tech/xenon-airdop-task-tracker/actions/workflows/build.yml/badge.svg)](https://github.com/xenon231tech/xenon-airdop-task-tracker/actions)
+[![Deploy](https://github.com/xenon231tech/xenon-airdop-task-tracker/actions/workflows/deploy.yml/badge.svg)](https://github.com/xenon231tech/xenon-airdop-task-tracker/actions)
+[![Security](https://github.com/xenon231tech/xenon-airdop-task-tracker/actions/workflows/security.yml/badge.svg)](https://github.com/xenon231tech/xenon-airdop-task-tracker/actions)
+
 > **Track • Manage • Conquer** — Never miss an airdrop task again! 🎯
 
 </div>
@@ -190,13 +195,20 @@ We welcome contributions! Please feel free to:
 - 🔧 Submit pull requests
 - 📝 Improve documentation
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for details.
+See [CONTRIBUTING.md](CONTRIBUTING.md) and [CONTRIBUTING_WORKFLOW.md](CONTRIBUTING_WORKFLOW.md) for details.
 
 ---
 
 ## 📄 License
 
-This project is licensed under the **MIT License** - see [LICENSE](LICENSE) file for details.
+This project is licensed under the **AGPL-3.0 License** - see [LICENSE](LICENSE) file for details.
+
+**Key Points**:
+- ✅ Free to use for personal projects
+- ✅ Source code must be shared
+- ✅ Modifications must be disclosed
+- ❌ Cannot be used for commercial purposes without permission
+- ❌ Cannot be sold without permission
 
 ---
 
